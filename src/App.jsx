@@ -31,7 +31,7 @@ function App() {
   const sendPushNotification = async () => {
     console.log(fcmToken)
     try {
-      const response = await axios.post('http://localhost:4000/notification', {
+      const response = await axios.post(' https://d7b79151052e.ngrok-free.app/notification', {
         token: fcmToken
       });
       if (response.status === 200) {
