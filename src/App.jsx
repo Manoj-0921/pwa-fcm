@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {registerForPush} from "./services/registerPush.js"
+import axios from "axios";
 function App() {
   const [token, setToken] = useState("");
   const [platform,setPlatfrom]=useState("")
@@ -11,7 +12,24 @@ function App() {
 
     });
   }, []);
+const sendTokenToBackend= async(token)=>{
+  try{
+    const reponse=   await axios.post("",{
+      token
+    })
+    if(reponse.status==200){
+      alert("ur token sucessfully send to the  backend")
+    }
+  
+  }
+  catch(error){
+     alert(`errr0:${error.message}`)
+  };
+ 
 
+ 
+  
+}
 
 
   return (
@@ -20,7 +38,7 @@ function App() {
       <p>FCM Token:</p>
       <textarea rows="5" cols="80" value={token} readOnly />
       <textarea row="2" cols="20" value={platform} readOnly/>
-      
+       <button  onClick={sendTokenToBackend}>sendTokenToBackend</button>
 
     </div>
   );
