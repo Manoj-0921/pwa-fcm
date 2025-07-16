@@ -23,11 +23,12 @@ function urlBase64ToUint8Array(base64String) {
 
 export async function registerForPush(setToken) {
   const platform = detectPlatform();
+  alert(` this is ur platfrom${platform}`)
 
   try {
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
-      console.warn("🔒 Notification permission not granted.");
+      alert("⚠️ Please allow notifications to enable push.");
       return;
     }
 
