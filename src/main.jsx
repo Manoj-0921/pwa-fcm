@@ -1,14 +1,12 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
 
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 
-// Use plugin-based registration (don't register manually)
-import { registerSW } from 'virtual:pwa-register';
-registerSW({ immediate: true });
+// Register service worker
+if ('serviceWorker' in navigator) {
+  const swFile = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 'sw.js' : 'firebase-messaging-sw.js';
+  navigator.serviceWorker.register(`/${swFile}`);
+}
+

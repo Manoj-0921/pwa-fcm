@@ -3,18 +3,11 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  server: {
-    host: true,
-    allowedHosts: [".ngrok-free.app"], // ✅ Allow external tunneling
-  },
   plugins: [
     react(),
     VitePWA({
-      registerType: 'prompt',
-      strategies: "injectManifest", // 👈 Required for custom SW
-      injectManifest: {
-        swSrc: "public/sw.js",
-      },
+      registerType: 'autoUpdate',
+      
       manifest: {
         name: 'FCM PWA App',
         short_name: 'FCM PWA',
@@ -37,8 +30,7 @@ export default defineConfig({
         ],
       },
       devOptions: {
-        enabled: true,
-        type: 'module',
+        enabled: true
       }
     }),
   ],

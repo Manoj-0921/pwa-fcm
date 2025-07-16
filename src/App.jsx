@@ -6,7 +6,7 @@ function App() {
 
   useEffect(() => {
     registerForPush(({token,platform}) => {
-      setToken(generatedToken);
+      setToken(token);
       setPlatfrom(platform)
 
     });
