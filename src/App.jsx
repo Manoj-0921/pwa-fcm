@@ -14,7 +14,7 @@ function App() {
   }, []);
 const sendTokenToBackend= async(token)=>{
   try{
-    const reponse=   await axios.post("",{
+    const reponse=   await axios.post("https://4f0eb7f39936.ngrok-free.app/notifcation",{
       token
     })
     if(reponse.status==200){
