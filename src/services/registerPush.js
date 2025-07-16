@@ -54,7 +54,7 @@ export async function registerForPush(setToken) {
         applicationServerKey: urlBase64ToUint8Array("BMU_YCY4w8CyrDxvP5aQt-1KsAJT8huKF6zfJQoBAGN0Xvcdzmxn5E-h-PKYeJAKEVPnFgO1zz3bZCOzBQQe7t8"),
       });
 
-      console.log("iOS Web Push Subscription:", subscription,pla);
+      console.log("iOS Web Push Subscription:", subscription,platform);
       setToken({token:JSON.stringify(subscription),platform}); // Send to backend
     } else {
       console.warn("Push notifications not supported or PWA not installed on iOS.");
