@@ -6,12 +6,12 @@ function App() {
   const [token, setToken] = useState("");
   const [platform, setPlatform] = useState("");
 
-  useEffect(() => {
+  const handleRegisterPush = () => {
     registerForPush(({ token, platform }) => {
       setToken(token);
       setPlatform(platform);
     });
-  }, []);
+  };
 
   const sendTokenToBackend = async (token) => {
     if (!token) {
@@ -20,7 +20,7 @@ function App() {
     }
 
     try {
-      const response = await axios.post("https://4f0eb7f39936.ngrok-free.app/notification", {
+      const response = await axios.post("https://945f087c4482.ngrok-free.app/notification", {
         token,
       });
       if (response.status === 200) {
@@ -39,6 +39,7 @@ function App() {
       <p>Platform:</p>
       <textarea rows="2" cols="20" value={platform} readOnly />
       <br />
+     <button onClick={handleRegisterPush}>🔔 Enable Push Notifications</button>
       <button onClick={() => sendTokenToBackend(token)}>Send Token To Backend</button>
     </div>
   );

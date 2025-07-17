@@ -53,6 +53,7 @@ Notification Permission: ${await Notification.requestPermission()}
       });
 
     } else if (platform === "ios" && isPwaInstalled()) {
+    
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
