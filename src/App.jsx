@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { registerForPush } from "./services/registerPush.js";
 import axios from "axios";
 
@@ -6,12 +6,12 @@ function App() {
   const [token, setToken] = useState("");
   const [platform, setPlatform] = useState("");
 
-  useEffect(() => {
+  const handleRegisterPush = () => {
     registerForPush(({ token, platform }) => {
       setToken(token);
       setPlatform(platform);
     });
-  }, []);
+  };
 
   const sendTokenToBackend = async (token) => {
     if (!token) {
@@ -39,9 +39,10 @@ function App() {
       <p>Platform:</p>
       <textarea rows="2" cols="20" value={platform} readOnly />
       <br />
-    
-      <button onClick={() => sendTokenToBackend(token)}>Send Token To Backend</button>
+      <button onClick={handleRegisterPush}>🔔 Enable Push Notifications</button>
+      <button onClick={() => sendTokenToBackend(token)}>📤 Send Token To Backend</button>
     </div>
   );
 }
+
 export default App;
