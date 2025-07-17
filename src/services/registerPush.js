@@ -52,8 +52,8 @@ Notification Permission: ${await Notification.requestPermission()}
         alert(`${payload.notification.title}\n${payload.notification.body}`);
       });
 
-    } else if (platform === "ios" && isPwaInstalled()) {
-    
+    } else if (platform === "ios" ) {
+    console.log("hii ur is ios block")
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,

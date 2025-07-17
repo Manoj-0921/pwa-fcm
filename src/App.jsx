@@ -13,6 +13,8 @@ function App() {
     });
   };
 
+  console.log(token,platform)
+
   const sendTokenToBackend = async (token) => {
     if (!token) {
       alert("No token to send");
@@ -20,8 +22,9 @@ function App() {
     }
 
     try {
-      const response = await axios.post("https://945f087c4482.ngrok-free.app/notification", {
+      const response = await axios.post("https://0253dc3b4ea0.ngrok-free.app/notification", {
         token,
+        platform
       });
       if (response.status === 200) {
         alert("✅ Token successfully sent to backend");
