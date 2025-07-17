@@ -6,12 +6,12 @@ function App() {
   const [token, setToken] = useState("");
   const [platform, setPlatform] = useState("");
 
-  const handleRegisterPush = () => {
+  useEffect(() => {
     registerForPush(({ token, platform }) => {
       setToken(token);
       setPlatform(platform);
     });
-  };
+  }, []);
 
   const sendTokenToBackend = async (token) => {
     if (!token) {
@@ -27,7 +27,7 @@ function App() {
         alert("✅ Token successfully sent to backend");
       }
     } catch (error) {
-      alert(`❌ Error: ${error.message}`);
+      alert(❌ Error: ${error.message});
     }
   };
 
@@ -39,10 +39,8 @@ function App() {
       <p>Platform:</p>
       <textarea rows="2" cols="20" value={platform} readOnly />
       <br />
-     {/* <button onClick={handleRegisterPush}>🔔 Enable Push Notifications</button> */}
+    
       <button onClick={() => sendTokenToBackend(token)}>Send Token To Backend</button>
     </div>
   );
 }
-
-export default App;
