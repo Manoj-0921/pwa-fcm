@@ -27,7 +27,7 @@ function App() {
         alert("✅ Token successfully sent to backend");
       }
     } catch (error) {
-      alert(❌ Error: ${error.message});
+      alert(`❌ Error: ${error.message}`);
     }
   };
 
