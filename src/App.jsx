@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { registerForPush } from "./services/registerPush.js";
 import axios from "axios";
-
+function detectPlatform() {
+  const ua = navigator.userAgent.toLowerCase();
+  if (/android/.test(ua)) return "android";
+  if (/iphone|ipad|ipod/.test(ua) && !window.MSStream) return "ios";
+  return "unknown";
+}
 function App() {
   const [token, setToken] = useState("");
   const [platform, setPlatform] = useState("");
 
-  const handleRegisterPush = () => {
-    registerForPush(({ token, platform }) => {
+
+useEffect(()=>{
+  registerForPush(({ token, platform }) => {
       setToken(token);
       setPlatform(platform);
     });
-  };
+},[])
 
   const sendTokenToBackend = async () => {
     if (!token || !platform) {
@@ -62,7 +68,7 @@ function App() {
       <p>Platform:</p>
       <textarea rows="2" cols="20" value={platform} readOnly />
       <br />
-      <button onClick={handleRegisterPush}>🔔 Enable Push Notifications</button>
+     
       <button onClick={sendTokenToBackend}>📤 Send Token To Backend</button>
       <button onClick={logOut}>🚪 Logout</button>
     </div>

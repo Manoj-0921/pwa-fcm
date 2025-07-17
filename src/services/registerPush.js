@@ -26,15 +26,12 @@ export async function registerForPush(setToken) {
  alert(`
 Platform: ${platform}
 Is PWA Installed: ${isPwaInstalled()}
-Notification Permission: ${await Notification.requestPermission()}
+
 `);
 
   try {
-    const permission = await Notification.requestPermission();
-    if (permission !== "granted") {
-      alert("⚠️ Please allow notifications to enable push.");
-      return;
-    }
+    
+   
 
     if (platform === "android") {
       const token = await getToken(messaging, {
