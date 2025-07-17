@@ -13,11 +13,9 @@ function App() {
     });
   };
 
-  console.log(token,platform)
-
-  const sendTokenToBackend = async (token) => {
-    if (!token) {
-      alert("No token to send");
+  const sendTokenToBackend = async () => {
+    if (!token || !platform) {
+      alert("❌ No token or platform to send");
       return;
     }
 
@@ -30,7 +28,29 @@ function App() {
         alert("✅ Token successfully sent to backend");
       }
     } catch (error) {
-      alert(`❌ Error: ${error.message}`);
+      alert(`❌ Error sending token: ${error.message}`);
+    }
+  };
+
+  const logOut = async () => {
+    if (!token || !platform) {
+      alert("❌ No token or platform to logout");
+      return;
+    }
+
+    try {
+      const response = await axios.post("https://d8f967a18680.ngrok-free.app/logout", {
+        token,
+        platform
+      });
+
+      if (response.status === 200) {
+        alert("👋 Logged out and token removed");
+        setToken("");
+        setPlatform("");
+      }
+    } catch (error) {
+      alert(`❌ Logout error: ${error.response?.data?.error || error.message}`);
     }
   };
 
@@ -43,7 +63,8 @@ function App() {
       <textarea rows="2" cols="20" value={platform} readOnly />
       <br />
       <button onClick={handleRegisterPush}>🔔 Enable Push Notifications</button>
-      <button onClick={() => sendTokenToBackend(token)}>📤 Send Token To Backend</button>
+      <button onClick={sendTokenToBackend}>📤 Send Token To Backend</button>
+      <button onClick={logOut}>🚪 Logout</button>
     </div>
   );
 }
