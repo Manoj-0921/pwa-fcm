@@ -39,7 +39,7 @@ function App() {
       <p>Platform:</p>
       <textarea rows="2" cols="20" value={platform} readOnly />
       <br />
-     <button onClick={handleRegisterPush}>🔔 Enable Push Notifications</button>
+     {/* <button onClick={handleRegisterPush}>🔔 Enable Push Notifications</button> */}
       <button onClick={() => sendTokenToBackend(token)}>Send Token To Backend</button>
     </div>
   );
