@@ -22,7 +22,7 @@ function App() {
     }
 
     try {
-      const response = await axios.post("https://0253dc3b4ea0.ngrok-free.app/notification", {
+      const response = await axios.post("https://d8f967a18680.ngrok-free.app /notification", {
         token,
         platform
       });
