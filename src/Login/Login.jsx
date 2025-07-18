@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNotification } from '../NotificationContext';
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({setIsLoggedIn}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { token, platform } = useNotification(); // ✅ get from context
@@ -28,6 +28,7 @@ const navigate = useNavigate();
 
       if (response.status === 200) {
         alert("✅ Login successful");
+setIsLoggedIn(true)
        navigate("/home")
       }
     } catch (err) {

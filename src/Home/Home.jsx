@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useNotification } from "../NotificationContext";
 import axios from "axios";
 
-function Home() {
+function Home({setIsLoggedIn}) {
   const navigate = useNavigate();
   const { token, platform } = useNotification(); // ✅ Get from context
 console.log("oken",platform)
@@ -18,8 +18,15 @@ console.log("oken",platform)
     } catch (error) {
       console.error("❌ Logout failed:", error);
     }
+    finally{
+        setIsLoggedIn(false)
+        localStorage.removeItem("isLoggedIn");
 
-    navigate("/");
+
+ navigate("/");
+    }
+
+   
   };
 
   return (
