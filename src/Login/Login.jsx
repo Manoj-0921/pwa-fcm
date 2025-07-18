@@ -1,65 +1,91 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './Login.css';
+import axios from 'axios';
+import { useNotification } from '../NotificationContext';
+import { useNavigate } from "react-router-dom";
 
-function LoginScreen() {
+export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { token, platform } = useNotification(); // ✅ get from context
+  console.log(token,platform)
+  
+const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    if (!token || !platform) {
+      alert("🔔 Push token or platform not available yet.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("https://cd4266f80db0.ngrok-free.app/login", {
+        username,
+        password,
+        token,
+        platform,
+      });
+
+      if (response.status === 200) {
+        alert("✅ Login successful");
+       navigate("/home")
+      }
+    } catch (err) {
+      console.error(err);
+      alert("❌ Login failed");
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 font-sans">
-      <div className="w-full max-w-md">
-        {/* Header Container */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-lg text-gray-600">Sign in to continue</p>
+    <div className="container">
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet"
+      />
+      <div className="login-container">
+        <div className="header-container">
+          <h1 className="title">Welcome Back</h1>
+          <p className="subtitle">Sign in to continue</p>
         </div>
 
-        {/* Form Container */}
-        <div className="bg-white rounded-2xl p-8 shadow-lg">
-          {/* Username Input */}
-          <div className="mb-6">
-            <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
-              Username
-            </label>
+        <div className="form-container">
+          <div className="input-group">
+            <label htmlFor="username" className="label">Username</label>
             <input
-              type="text"
               id="username"
-              className="w-full px-4 py-3 bg-gray-50 rounded-xl text-gray-800 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="text"
+              className="input"
               placeholder="Enter your username"
               autoCapitalize="none"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)} // ✅ controlled input
             />
           </div>
 
-          {/* Password Input */}
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-              Password
-            </label>
+          <div className="input-group">
+            <label htmlFor="password" className="label">Password</label>
             <input
-              type="password"
               id="password"
-              className="w-full px-4 py-3 bg-gray-50 rounded-xl text-gray-800 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="password"
+              className="input"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} // ✅ controlled input
             />
           </div>
 
-          {/* Sign In Button */}
-          <button
-            type="button"
-            className="w-full bg-blue-600 text-white font-semibold py-4 rounded-xl shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition duration-300 ease-in-out"
-          >
+          <button className="login-button" onClick={handleLogin}>
             Sign In
           </button>
 
-          {/* Sign Up Link */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-600 text-base">
+          <button className="signup-link">
+            <span className="signup-text">
               Don't have an account?{' '}
-              <a href="#" className="text-blue-600 font-semibold hover:underline">
-                Sign up
-              </a>
-            </p>
-          </div>
+              <span className="signup-text-bold">Sign up</span>
+            </span>
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-export default LoginScreen;
