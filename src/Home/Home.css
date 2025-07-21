@@ -1,0 +1,101 @@
+.container1 {
+  min-height: 100vh;
+  background-color: #f9fafb; /* gray-50 */
+  padding: 1rem; /* p-4 */
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.period-wrapper {
+  background-color: #ffffff; /* bg-white */
+  padding: 1rem; /* p-4 */
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.period-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem; /* gap-2 */
+}
+
+.period-button {
+  flex: 1;
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border-radius: 0.75rem; /* rounded-xl */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600; /* font-semibold */
+  text-align: center;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter; /* transition-colors */
+  transition-duration: 200ms; /* duration-200 */
+  border: none; /* Remove default button border */
+  cursor: pointer;
+}
+
+.period-button-selected {
+  background-color: #4f46e5; /* bg-indigo-600 */
+  color: #ffffff; /* text-white */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+}
+
+.period-button-default {
+  background-color: #f3f4f6; /* bg-gray-100 */
+  color: #4b5563; /* text-gray-700 */
+}
+
+.period-button-default:hover {
+  background-color: #e5e7eb; /* hover:bg-gray-200 */
+}
+
+.date-picker-container {
+  background-color: #ffffff; /* bg-white */
+  padding: 1rem; /* p-4 */
+  border-radius: 1rem; /* rounded-xl */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+  margin-bottom: 1rem; /* mb-4 */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* gap-3 */
+}
+
+.date-picker-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem; /* p-3 */
+  background-color: #f3f4f6; /* bg-gray-100 */
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+}
+
+.date-picker-label {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600; /* font-semibold */
+  color: #4b5563; /* text-gray-700 */
+}
+
+.date-picker-input {
+  font-size: 0.875rem; /* text-sm */
+  color: #111827; /* text-gray-900 */
+  background-color: transparent;
+  border: none;
+  outline: none; /* focus:outline-none */
+  cursor: pointer;
+}
+
+.debug-display {
+  background-color: #eff6ff; /* bg-blue-50 */
+  padding: 1rem; /* p-4 */
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+  color: #1e40af; /* text-blue-800 */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+}
+
+.debug-text-bold {
+  font-weight: 700; /* font-bold */
+}
