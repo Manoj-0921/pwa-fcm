@@ -18,7 +18,7 @@ const Home = ({setIsLoggedIn}) => {
  const handleLogout = async () => {
     try {
       
-      await axios.post("https://a79ed7b4f23a.ngrok-free.app/logout", {
+      await axios.post("https://4ed32b77deb9.ngrok-free.app/logout", {
          token,
          platform,
       });
@@ -30,6 +30,7 @@ const Home = ({setIsLoggedIn}) => {
     finally{
         setIsLoggedIn(false)
         sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("username");
 
 
  navigate("/");
@@ -38,20 +39,26 @@ const Home = ({setIsLoggedIn}) => {
    
   };
  
-  const fetchFromBackend=async(dates)=>{
-try{
-const response=await axios.post("",{
-  startDate:dates.startDate,
-  endDate:dates.endDate
-})
-if(response.status===200){
-  console.log(response.data)
-}
-}
-catch(error){
-  console.log(error)
-}
+const fetchFromBackend = async (dates) => {
+  const username = sessionStorage.getItem("username");
+  const { startDate, endDate } = dates;
+
+  try {
+    const response = await axios.post("https://4ed32b77deb9.ngrok-free.app/date", {
+      username,
+      startDate,
+      endDate,
+    });
+
+    if (response.status === 200) {
+      console.log("✅ Response from backend:", response.data);
+    }
+  } catch (error) {
+    console.error("❌ Error fetching data from backend:", error.message);
   }
+};
+
+
 
   return (
     <Layout hasSider>
@@ -69,7 +76,7 @@ catch(error){
         <Content style={{ marginTop: 64, overflow: 'initial' }}>
           <div
             style={{
-              padding: 24,
+              paddingTop: 24,
               textAlign: 'center',
               background: " #f5f6fa",
               borderRadius: borderRadiusLG,
@@ -77,6 +84,7 @@ catch(error){
           >
            <Date fetchFromBackend={fetchFromBackend}/>
           </div>
+          
         </Content>
 
         <Footer style={{ textAlign: 'center' }} />

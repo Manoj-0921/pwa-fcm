@@ -19,7 +19,7 @@ const navigate = useNavigate();
     }
 
     try {
-      const response = await axios.post("https://a79ed7b4f23a.ngrok-free.app/login", {
+      const response = await axios.post("https://4ed32b77deb9.ngrok-free.app/login", {
         username,
         password,
         token,
@@ -30,6 +30,7 @@ const navigate = useNavigate();
         alert("✅ Login successful");
 setIsLoggedIn(true)
 sessionStorage.setItem("isLoggedIn", "true");
+sessionStorage.setItem("username", username)
        navigate("/home")
       }
     } catch (err) {
