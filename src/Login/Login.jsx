@@ -19,7 +19,7 @@ const navigate = useNavigate();
     }
 
     try {
-      const response = await axios.post(" https://04b85df38392.ngrok-free.app/login", {
+      const response = await axios.post("https://a79ed7b4f23a.ngrok-free.app/login", {
         username,
         password,
         token,
@@ -29,7 +29,7 @@ const navigate = useNavigate();
       if (response.status === 200) {
         alert("✅ Login successful");
 setIsLoggedIn(true)
-localStorage.setItem("isLoggedIn", "true");
+sessionStorage.setItem("isLoggedIn", "true");
        navigate("/home")
       }
     } catch (err) {
@@ -40,10 +40,6 @@ localStorage.setItem("isLoggedIn", "true");
 
   return (
     <div className="container">
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-        rel="stylesheet"
-      />
       <div className="login-container">
         <div className="header-container">
           <h1 className="title">Welcome Back</h1>
