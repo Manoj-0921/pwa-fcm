@@ -17,16 +17,21 @@ export const NotificationProvider = ({ children }) => {
     }
   }, []);
 
-  const register = () => {
-    registerForPush(({ token, platform }) => {
-      setToken(token);
-      setPlatform(platform);
-    });
+ const register = async () => {
+    try {
+      await registerForPush(({ token, platform }) => {
+        setToken(token);
+        setPlatform(platform);
+        setPermission("granted");
+      });
+    } catch (err) {
+      console.error("❌ Error during registration:", err);
+    }
   };
 
   return (
     <NotificationContext.Provider
-      value={{ token, platform, permission }}
+      value={{ token, platform, permission ,register}}
     >
       {children}
     </NotificationContext.Provider>

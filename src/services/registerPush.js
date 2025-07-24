@@ -1,6 +1,6 @@
 import { messaging, getToken, onMessage } from "../firebase-config";
 
-function detectPlatform() {
+export function detectPlatform() {
   const ua = navigator.userAgent.toLowerCase();
   if (/android/.test(ua)) return "android";
   if (/iphone|ipad|ipod/.test(ua) && !window.MSStream) return "ios";

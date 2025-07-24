@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login({setIsLoggedIn}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { token, platform } = useNotification(); // ✅ get from context
+  const { token, platform,permission,register } = useNotification(); // ✅ get from context
   console.log(token,platform)
   
 const navigate = useNavigate();
@@ -76,6 +76,23 @@ sessionStorage.setItem("username", username)
           <button className="login-button" onClick={handleLogin}>
             Sign In
           </button>
+          { permission !== "granted" && (
+  <button
+    className="login-button"
+    onClick={async () => {
+      const result = await Notification.requestPermission();
+      if (result === "granted") {
+        await register(); // ✅ manually call register
+        alert("✅ Notification permission granted and registered");
+      } else {
+        alert("❌ Notification permission denied");
+      }
+    }}
+  >
+    Enable Notifications
+  </button>
+)}
+
 
           <button className="signup-link">
             <span className="signup-text">
