@@ -1,8 +1,9 @@
 import React from 'react';
 import './Home.css';
 import Date from './Date.jsx/Date';
+import Data from "./Data/Data"
 import { Layout, theme } from 'antd';
-import { LogoutOutlined } from '@ant-design/icons'; // import the icon
+import { ImportOutlined, LogoutOutlined } from '@ant-design/icons'; // import the icon
 import axios from 'axios';
 import { useNotification } from '../NotificationContext';
 import { useNavigate } from "react-router-dom"; 
@@ -52,9 +53,24 @@ const fetchFromBackend = async (dates) => {
 
     if (response.status === 200) {
       console.log("✅ Response from backend:", response.data);
+      // You can handle success message if needed
     }
   } catch (error) {
-    console.error("❌ Error fetching data from backend:", error.message);
+    let message = "❌ An unexpected error occurred";
+
+    if (error.response) {
+      // Server responded with a status outside 2xx
+      message = `🚫 Server Error: ${error.response.status}\n${error.response.data?.error || error.response.statusText}`;
+    } else if (error.request) {
+      // Request made but no response received
+      message = "📡 Network Error: No response from the server. Please check your connection.";
+    } else {
+      // Other unknown errors (e.g., config, CORS, client-side)
+      message = `⚠️ Error: ${error.message}`;
+    }
+
+    console.error("❌ Error fetching data from backend:", error);
+    alert(message);
   }
 };
 
@@ -84,7 +100,17 @@ const fetchFromBackend = async (dates) => {
           >
            <Date fetchFromBackend={fetchFromBackend}/>
           </div>
-          
+          <div
+          style={{
+                margin:"0px",
+                padding:"0px",
+              textAlign: 'center',
+              background: " #f5f6fa",
+              borderRadius: borderRadiusLG,
+            }}>
+              <Data />
+
+          </div>
         </Content>
 
         <Footer style={{ textAlign: 'center' }} />

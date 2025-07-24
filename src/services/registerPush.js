@@ -23,7 +23,7 @@ function urlBase64ToUint8Array(base64String) {
 
 export async function registerForPush(setToken) {
   const platform = detectPlatform();
- const permission=Notification.permission
+ 
  alert(`
 Platform: ${platform}
 Is PWA Installed: ${isPwaInstalled()}

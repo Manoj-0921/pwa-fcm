@@ -75,7 +75,7 @@ const containerStyle = {
   width: '100%',
   maxWidth: '24rem',
   margin: '0 auto',
-  padding: '10px',
+  padding: '16px',
 };
 
 const cardStyle = {

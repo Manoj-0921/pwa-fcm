@@ -1,0 +1,84 @@
+.app-container {
+  display: flex;
+  flex: 1;
+  justify-content: center; /* Center content horizontally */
+  align-items: center;     /* Center content vertically */
+  padding: 24px;
+  background-color: #F0F2F5; /* Slightly darker background for contrast */
+  min-height: 100vh; /* Ensure it takes full viewport height for centering */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+/* Summary Card Container */
+.summary-cards-container {
+  display: flex;
+  flex-direction: column; /* Default to column for mobile-first */
+  gap: 24px; /* Spacing between cards */
+  width: 100%;
+  max-width: 700px; /* Increased max width */
+}
+
+/* Responsive adjustment for larger screens */
+@media (min-width: 768px) {
+  .summary-cards-container {
+    flex-direction: row; /* Row direction on larger screens */
+  }
+}
+
+/* Base style for individual cards */
+.card-base {
+  flex: 1;
+  border-radius: 16px; /* More rounded corners */
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+  transition: transform 0.3s ease-in-out; /* Smooth transition for hover */
+  cursor: pointer; /* Indicate interactivity */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 150px; /* Ensure consistent height */
+}
+
+/* Hover effect for cards */
+.card-base:hover {
+  transform: scale(1.03);
+}
+
+/* Specific styles for Total Logins Card */
+.login-card {
+  background: linear-gradient(135deg, #ADD8E6, #87CEEB); /* Light Sky Blue to Sky Blue */
+  color: #FFFFFF; /* White text for contrast */
+}
+
+/* Specific styles for Total Duration Card */
+.duration-card {
+  background: linear-gradient(135deg, #B0E0E6, #6495ED); /* Powder Blue to Cornflower Blue */
+  color: #FFFFFF; /* White text for contrast */
+}
+
+/* Styles for card titles */
+.card-title {
+  font-size: 18px;
+  font-weight: 600; /* Semi-bold */
+  margin-bottom: 10px;
+  margin-top: 0; /* Reset default paragraph margin */
+  color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+}
+
+/* Styles for main value (Total Logins) */
+.card-value {
+  font-size: 36px;
+  font-weight: 700; /* Bold */
+  margin: 0; /* Reset default paragraph margin */
+  color: #FFFFFF;
+}
+
+/* Styles for smaller value (Total Duration) */
+.card-value-small {
+  font-size: 24px; /* Slightly smaller for duration */
+  font-weight: 700;
+  margin: 0; /* Reset default paragraph margin */
+  color: #FFFFFF;
+}
