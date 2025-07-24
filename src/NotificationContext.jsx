@@ -1,6 +1,7 @@
 // context/NotificationContext.js
 import { createContext, useContext, useState, useEffect } from "react";
 import { registerForPush } from "./services/registerPush.js";
+import { Alert } from "antd";
 
 const NotificationContext = createContext();
 
@@ -13,7 +14,7 @@ export const NotificationProvider = ({ children }) => {
     if (Notification.permission === "granted") {
       register();
     } else {
-      console.log("🔔 Notification permission not granted");
+      alert("🔔 Notification permission not granted");
     }
   }, []);
 

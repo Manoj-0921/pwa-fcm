@@ -4,17 +4,32 @@ import axios from 'axios';
 import { useNotification } from '../NotificationContext';
 import { useNavigate } from "react-router-dom";
 
-export default function Login({setIsLoggedIn}) {
+export default function Login({ setIsLoggedIn }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { token, platform,permission,register } = useNotification(); // ✅ get from context
-  console.log(token,platform)
-  
-const navigate = useNavigate();
+  const [permissionGranted, setPermissionGranted] = useState(Notification.permission === "granted");
+  const { token, platform } = useNotification(); // ✅ get from context
+  const navigate = useNavigate();
+
+  const requestNotificationPermission = async () => {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        alert("🔔 Notifications enabled");
+        setPermissionGranted(true);
+      } else {
+        alert("❌ Notifications blocked or dismissed");
+        setPermissionGranted(false);
+      }
+    } catch (err) {
+      console.error("Error requesting permission", err);
+      alert("❌ Notification request failed");
+    }
+  };
 
   const handleLogin = async () => {
     if (!token || !platform) {
-      alert("🔔 Push token or platform not available yet.");
+      alert("⚠️ Push token or platform not available. Please allow notifications first.");
       return;
     }
 
@@ -28,10 +43,10 @@ const navigate = useNavigate();
 
       if (response.status === 200) {
         alert("✅ Login successful");
-setIsLoggedIn(true)
-sessionStorage.setItem("isLoggedIn", "true");
-sessionStorage.setItem("username", username)
-       navigate("/home")
+        setIsLoggedIn(true);
+        sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("username", username);
+        navigate("/home");
       }
     } catch (err) {
       console.error(err);
@@ -57,7 +72,7 @@ sessionStorage.setItem("username", username)
               placeholder="Enter your username"
               autoCapitalize="none"
               value={username}
-              onChange={(e) => setUsername(e.target.value)} // ✅ controlled input
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
@@ -69,30 +84,23 @@ sessionStorage.setItem("username", username)
               className="input"
               placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)} // ✅ controlled input
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          <button className="login-button" onClick={handleLogin}>
-            Sign In
-          </button>
-          { permission !== "granted" && (
-  <button
-    className="login-button"
-    onClick={async () => {
-      const result = await Notification.requestPermission();
-      if (result === "granted") {
-        await register(); // ✅ manually call register
-        alert("✅ Notification permission granted and registered");
-      } else {
-        alert("❌ Notification permission denied");
-      }
-    }}
-  >
-    Enable Notifications
-  </button>
-)}
+          {/* ✅ Notification permission button */}
+          {!permissionGranted && (
+            <button className="login-button" onClick={requestNotificationPermission}>
+              Enable Notifications
+            </button>
+          )}
 
+          {/* ✅ Only show login when permission granted */}
+          {permissionGranted && (
+            <button className="login-button" onClick={handleLogin}>
+              Sign In
+            </button>
+          )}
 
           <button className="signup-link">
             <span className="signup-text">

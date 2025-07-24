@@ -1,6 +1,6 @@
 import { messaging, getToken, onMessage } from "../firebase-config";
 
-export function detectPlatform() {
+function detectPlatform() {
   const ua = navigator.userAgent.toLowerCase();
   if (/android/.test(ua)) return "android";
   if (/iphone|ipad|ipod/.test(ua) && !window.MSStream) return "ios";
@@ -23,6 +23,7 @@ function urlBase64ToUint8Array(base64String) {
 
 export async function registerForPush(setToken) {
   const platform = detectPlatform();
+ const permission=Notification.permission
  alert(`
 Platform: ${platform}
 Is PWA Installed: ${isPwaInstalled()}
