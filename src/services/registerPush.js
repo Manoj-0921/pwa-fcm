@@ -36,10 +36,11 @@ Is PWA Installed: ${isPwaInstalled()}
        
 
     if (platform === "android") {
+      console.log("urru this andriod block")
       const token = await getToken(messaging, {
         vapidKey: "BLNEofFNYEcYaTRKWtRT3nj3xMwpUenDwX2Xqr3M3CT0hrLJt37iQTEiZcAhsE6WCt9wc16IMJTv39VrUgapI68",
       });
-
+console.log(token,"tokn")
       if (token) {
         console.log(" Android FCM Token:", token);
         setToken({token,platform});

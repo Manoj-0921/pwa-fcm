@@ -18,7 +18,7 @@ const Home = ({setIsLoggedIn}) => {
  const handleLogout = async () => {
     try {
       
-      await axios.post("https://4ed32b77deb9.ngrok-free.app/logout", {
+      await axios.post(" https://0ebaccb699c1.ngrok-free.app /logout", {
          token,
          platform,
       });
@@ -44,7 +44,7 @@ const fetchFromBackend = async (dates) => {
   const { startDate, endDate } = dates;
 
   try {
-    const response = await axios.post("https://4ed32b77deb9.ngrok-free.app/date", {
+    const response = await axios.post(" https://0ebaccb699c1.ngrok-free.app /date", {
       username,
       startDate,
       endDate,
