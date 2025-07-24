@@ -8,9 +8,23 @@ export default function Login({setIsLoggedIn}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { token, platform } = useNotification(); // ✅ get from context
+  const [permissionStatus, setPermissionStatus] = useState()
   console.log(token,platform)
   
 const navigate = useNavigate();
+const enableNotifications = async () => {
+    if (Notification.permission === "default") {
+      const permission = await Notification.requestPermission();
+      setPermissionStatus(permission);
+      if (permission === "granted") {
+        window.location.reload(); // force context to re-register
+      } else {
+        alert("🚫 Notification permission denied");
+      }
+    } else {
+      alert("✅ Notification permission already " + Notification.permission);
+    }
+  };
 
   const handleLogin = async () => {
     if (!token || !platform) {
@@ -19,7 +33,7 @@ const navigate = useNavigate();
     }
 
     try {
-      const response = await axios.post(" https://0ebaccb699c1.ngrok-free.app /login", {
+      const response = await axios.post("https://747568a06919.ngrok-free.app/login", {
         username,
         password,
         token,
@@ -72,6 +86,15 @@ sessionStorage.setItem("username", username)
               onChange={(e) => setPassword(e.target.value)} // ✅ controlled input
             />
           </div>
+           {permissionStatus !== "granted" && (
+            <button
+              className="login-button"
+              style={{ backgroundColor: "#ffb347", marginBottom: "10px" }}
+              onClick={enableNotifications}
+            >
+              Enable Notifications
+            </button>
+          )}
 
           <button className="login-button" onClick={handleLogin}>
             Sign In
