@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import './Home.css';
 import Date from './Date.jsx/Date';
 import Data from "./Data/Data"
@@ -11,7 +12,9 @@ const { Header, Content, Footer } = Layout;
 
 const Home = ({setIsLoggedIn}) => {
    const navigate = useNavigate();
-    const { token, platform } = useNotification();
+    const { token, platform } = useNotification([]);
+    const[data,setData]=useState([])
+    console.log(data,"hii")
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -19,7 +22,7 @@ const Home = ({setIsLoggedIn}) => {
  const handleLogout = async () => {
     try {
       
-      await axios.post("https://747568a06919.ngrok-free.app/logout", {
+      await axios.post(" https://de87e542bd7e.ngrok-free.app/logout", {
          token,
          platform,
       });
@@ -42,17 +45,21 @@ const Home = ({setIsLoggedIn}) => {
  
 const fetchFromBackend = async (dates) => {
   const username = sessionStorage.getItem("username");
+  console.log("hiii")
   const { startDate, endDate } = dates;
 
   try {
-    const response = await axios.post("https://747568a06919.ngrok-free.app/date", {
+    const response = await axios.post(" https://de87e542bd7e.ngrok-free.app/date", {
       username,
       startDate,
       endDate,
     });
 
     if (response.status === 200) {
-      console.log("✅ Response from backend:", response.data);
+      
+       
+      console.log("✅ Response from backend:", response.data.attendance);
+      setData(response.data.attendance||[])
       // You can handle success message if needed
     }
   } catch (error) {
@@ -92,7 +99,7 @@ const fetchFromBackend = async (dates) => {
         <Content style={{ marginTop: 64, overflow: 'initial' }}>
           <div
             style={{
-              paddingTop: 24,
+              paddingTop: 4,
               textAlign: 'center',
               background: " #f5f6fa",
               borderRadius: borderRadiusLG,
@@ -100,17 +107,14 @@ const fetchFromBackend = async (dates) => {
           >
            <Date fetchFromBackend={fetchFromBackend}/>
           </div>
-          <div
-          style={{
-                margin:"0px",
-                padding:"0px",
+        <div style={{
+              paddingTop: 1,
               textAlign: 'center',
               background: " #f5f6fa",
               borderRadius: borderRadiusLG,
             }}>
-              <Data />
-
-          </div>
+          <Data data={data}/>
+        </div>
         </Content>
 
         <Footer style={{ textAlign: 'center' }} />

@@ -1,84 +1,238 @@
-.app-container {
+/* Container setup */
+.container1 {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+}
+
+/* Summary cards */
+.card-summary-container {
   display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card {
   flex: 1;
-  justify-content: center; /* Center content horizontally */
-  align-items: center;     /* Center content vertically */
-  padding: 24px;
-  background-color: #F0F2F5; /* Slightly darker background for contrast */
-  min-height: 100vh; /* Ensure it takes full viewport height for centering */
-  box-sizing: border-box; /* Include padding in element's total width and height */
-}
-
-/* Summary Card Container */
-.summary-cards-container {
-  display: flex;
-  flex-direction: column; /* Default to column for mobile-first */
-  gap: 24px; /* Spacing between cards */
-  width: 100%;
-  max-width: 700px; /* Increased max width */
-}
-
-/* Responsive adjustment for larger screens */
-@media (min-width: 768px) {
-  .summary-cards-container {
-    flex-direction: row; /* Row direction on larger screens */
-  }
-}
-
-/* Base style for individual cards */
-.card-base {
-  flex: 1;
-  border-radius: 16px; /* More rounded corners */
-  padding: 24px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 12px;
   text-align: center;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow */
-  transition: transform 0.3s ease-in-out; /* Smooth transition for hover */
-  cursor: pointer; /* Indicate interactivity */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.card-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.card-value {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.blue-text {
+  color: #007bff;
+}
+
+.green-text {
+  color: #28a745;
+}
+
+/* Tab buttons */
+.tab-buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px 0;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  color: #555;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: 0.2s ease;
+}
+
+.tab-button:hover {
+  color: #000;
+}
+
+.active-tab {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  font-weight: 600;
+}
+
+/* Tab content area */
+.tab-content {
+  margin-top: 10px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.daily-record-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.daily-record-item {
+  margin-bottom: 16px;
+  background-color: #f1f3f5;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.daily-record-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: #333;
+}
+
+.daily-total-duration {
+  font-weight: 500;
+  color: #28a745;
+}
+
+/* Individual record cards */
+.individual-record-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 6px;
   display: flex;
   flex-direction: column;
+}
+
+.individual-record-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 4px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.record-detail {
+  display: flex;
   justify-content: space-between;
-  align-items: center;
-  min-height: 150px; /* Ensure consistent height */
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 4px;
 }
 
-/* Hover effect for cards */
-.card-base:hover {
-  transform: scale(1.03);
+.detail-label {
+  font-weight: 500;
+  color: #555;
 }
 
-/* Specific styles for Total Logins Card */
-.login-card {
-  background: linear-gradient(135deg, #ADD8E6, #87CEEB); /* Light Sky Blue to Sky Blue */
-  color: #FFFFFF; /* White text for contrast */
+.detail-value {
+  color: #111;
 }
 
-/* Specific styles for Total Duration Card */
-.duration-card {
-  background: linear-gradient(135deg, #B0E0E6, #6495ED); /* Powder Blue to Cornflower Blue */
-  color: #FFFFFF; /* White text for contrast */
+/* No data styling */
+.no-records-day,
+.no-records-message {
+  font-style: italic;
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+  margin-top: 8px;
 }
 
-/* Styles for card titles */
-.card-title {
-  font-size: 18px;
-  font-weight: 600; /* Semi-bold */
-  margin-bottom: 10px;
-  margin-top: 0; /* Reset default paragraph margin */
-  color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+/* Responsive tweaks */
+@media (max-width: 400px) {
+  .card-value {
+    font-size: 18px;
+  }
+
+  .tab-button {
+    font-size: 14px;
+  }
+
+  .record-detail {
+    font-size: 13px;
+  }
+}
+.record-row {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 4px;
 }
 
-/* Styles for main value (Total Logins) */
-.card-value {
-  font-size: 36px;
-  font-weight: 700; /* Bold */
-  margin: 0; /* Reset default paragraph margin */
-  color: #FFFFFF;
+.record-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  border-right: 1px solid #eee;
 }
 
-/* Styles for smaller value (Total Duration) */
-.card-value-small {
-  font-size: 24px; /* Slightly smaller for duration */
-  font-weight: 700;
-  margin: 0; /* Reset default paragraph margin */
-  color: #FFFFFF;
+.record-cell:last-child {
+  border-right: none;
+}
+
+.detail-label {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+.detail-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+}
+@media (max-width: 400px) {
+  .record-cell {
+    padding: 2px;
+  }
+
+  .detail-label {
+    font-size: 12px;
+  }
+
+  .detail-value {
+    font-size: 14px;
+  }
+}
+.entry-cell {
+  background-color: #e6f0ff;
+  border-radius: 4px;
+}
+
+.exit-cell {
+  background-color: #ffe6e6;
+  border-radius: 4px;
+}
+
+.duration-cell {
+  background-color: #e6ffee;
+  border-radius: 4px;
+}
+.tab-content {
+  padding: 12px;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  text-align: center;
 }

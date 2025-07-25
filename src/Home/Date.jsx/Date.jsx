@@ -21,13 +21,13 @@ const DateSelector = ({ fetchFromBackend }) => {
   };
 
   useEffect(() => {
-    if (fetchFromBackend && startDate && endDate) {
+    if ( startDate && endDate) {
       fetchFromBackend({
         startDate: startDate.format('YYYY-MM-DD HH:mm:ss'),
         endDate: endDate.format('YYYY-MM-DD HH:mm:ss'),
       });
     }
-  }, [startDate, endDate, fetchFromBackend]);
+  }, [startDate, endDate,]);
 
   return (
     <div style={containerStyle}>
