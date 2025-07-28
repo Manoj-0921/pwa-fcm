@@ -23,7 +23,7 @@ const Home = ({setIsLoggedIn}) => {
   const refreshToken=sessionStorage.getItem("refreshToken")
     try {
       
-      await axios.post("https://a36e13d19a39.ngrok-free.app/logout", {
+      await axios.post("https://70eda91ef7d9.ngrok-free.app/logout", {
          token,
          platform,
          refreshToken
@@ -55,7 +55,7 @@ const fetchFromBackend = async (dates) => {
 
   try {
     const response = await axios.post(
-      "https://a36e13d19a39.ngrok-free.app/date",
+      "https://70eda91ef7d9.ngrok-free.app/date",
       { startDate, endDate },
       {
         headers: {
@@ -74,7 +74,7 @@ const fetchFromBackend = async (dates) => {
       try {
         // Call refresh endpoint
         const refreshResponse = await axios.post(
-          "https://a36e13d19a39.ngrok-free.app/refresh",
+          "https://70eda91ef7d9.ngrok-free.app/refresh",
           { username, refreshToken }
         );
 
