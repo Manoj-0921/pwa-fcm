@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
+import { Card, Button, DatePicker } from 'antd';
 import "./Data.css"
 
 dayjs.extend(duration);
@@ -187,12 +188,33 @@ const paginatedChartData = chartData.slice(
         {activeTab === 'insights' && (
           <div className="tab-content">
     <h2 className="section-title">Daily Duration</h2>
-   <div className="tab-content">
-  <h2 className="section-title">Daily Duration</h2>
+   {/* <div className="tab-content"> */}
+
   {chartData.length === 0 ? (
     <p>No data for insights.</p>
   ) : (
     <>
+     <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
+        <Button
+             type='primary'
+          onClick={() => setPageIndex(prev => Math.max(prev - 1, 0))}
+          disabled={pageIndex === 0}
+          style={{ marginRight: 10 }}
+        >
+          Previous
+        </Button>
+        <Button
+        type='primary'
+          onClick={() =>
+            setPageIndex(prev =>
+              (prev + 1) * itemsPerPage < chartData.length ? prev + 1 : prev
+            )
+          }
+          disabled={(pageIndex + 1) * itemsPerPage >= chartData.length}
+        >
+          Next
+        </Button>
+      </div>
       <div style={{ width: '100%', height: 300 }}>
         <ResponsiveContainer>
           <BarChart
@@ -216,35 +238,16 @@ const paginatedChartData = chartData.slice(
                 return `${h}h ${m}m`;
               }}
             />
-            <Bar dataKey="duration" fill="#436794ff" name="Total Duration" />
+            <Bar dataKey="duration" fill="#2b4e79ff" name="Total Duration" />
           </BarChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Pagination Buttons */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
-        <button
-          onClick={() => setPageIndex(prev => Math.max(prev - 1, 0))}
-          disabled={pageIndex === 0}
-          style={{ marginRight: 10 }}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() =>
-            setPageIndex(prev =>
-              (prev + 1) * itemsPerPage < chartData.length ? prev + 1 : prev
-            )
-          }
-          disabled={(pageIndex + 1) * itemsPerPage >= chartData.length}
-        >
-          Next
-        </button>
-      </div>
+     
     </>
   )}
 </div>
-          </div>
+          // </div>
         )}
       </div>
      </div>

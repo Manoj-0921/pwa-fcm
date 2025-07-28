@@ -4,7 +4,7 @@ import './Home.css';
 import Date from './Date.jsx/Date';
 import Data from "./Data/Data"
 import { Layout, theme } from 'antd';
-import { ImportOutlined, LogoutOutlined } from '@ant-design/icons'; // import the icon
+import { CodeSandboxCircleFilled, ImportOutlined, LogoutOutlined } from '@ant-design/icons'; // import the icon
 import axios from 'axios';
 import { useNotification } from '../NotificationContext';
 import { useNavigate } from "react-router-dom"; 
@@ -20,11 +20,13 @@ const Home = ({setIsLoggedIn}) => {
   } = theme.useToken();
 
  const handleLogout = async () => {
+  const refreshToken=sessionStorage.getItem("refreshToken")
     try {
       
-      await axios.post(" https://de87e542bd7e.ngrok-free.app/logout", {
+      await axios.post("https://a36e13d19a39.ngrok-free.app/logout", {
          token,
          platform,
+         refreshToken
       });
 
       console.log("🔕 Push token unregistered successfully");
@@ -34,6 +36,8 @@ const Home = ({setIsLoggedIn}) => {
     finally{
         setIsLoggedIn(false)
         sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("accessToken");
+        sessionStorage.removeItem("refreshToken");
         sessionStorage.removeItem("username");
 
 
@@ -45,39 +49,68 @@ const Home = ({setIsLoggedIn}) => {
  
 const fetchFromBackend = async (dates) => {
   const username = sessionStorage.getItem("username");
-  console.log("hiii")
+  const accessToken = sessionStorage.getItem("accessToken");
+  const refreshToken = sessionStorage.getItem("refreshToken");
   const { startDate, endDate } = dates;
 
   try {
-    const response = await axios.post(" https://de87e542bd7e.ngrok-free.app/date", {
-      username,
-      startDate,
-      endDate,
-    });
+    const response = await axios.post(
+      "https://a36e13d19a39.ngrok-free.app/date",
+      { startDate, endDate },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     if (response.status === 200) {
-      
-       
       console.log("✅ Response from backend:", response.data.attendance);
-      setData(response.data.attendance||[])
-      // You can handle success message if needed
+      setData(response.data.attendance || []);
     }
   } catch (error) {
-    let message = "❌ An unexpected error occurred";
+    if (error.response && error.response.status === 403 && refreshToken) {
+      console.log("🔄 Access token expired. Attempting to refresh...");
+      try {
+        // Call refresh endpoint
+        const refreshResponse = await axios.post(
+          "https://a36e13d19a39.ngrok-free.app/refresh",
+          { username, refreshToken }
+        );
 
-    if (error.response) {
-      // Server responded with a status outside 2xx
-      message = `🚫 Server Error: ${error.response.status}\n${error.response.data?.error || error.response.statusText}`;
-    } else if (error.request) {
-      // Request made but no response received
-      message = "📡 Network Error: No response from the server. Please check your connection.";
+        if (refreshResponse.status === 200 && refreshResponse.data.accessToken) {
+          sessionStorage.setItem("accessToken", refreshResponse.data.accessToken);
+          console.log("🔁 Token refreshed. Retrying original request...");
+          return fetchFromBackend(dates); // Retry with new token
+        } else {
+          throw new Error("Refresh token invalid or missing access token in response.");
+        }
+      } catch (refreshError) {
+        console.error("🔒 Failed to refresh token:", refreshError);
+        alert("Session expired. Please login again.");
+       setIsLoggedIn(false)
+        sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("accessToken");
+        sessionStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("username");
+
+
+ navigate("/");
+      }
     } else {
-      // Other unknown errors (e.g., config, CORS, client-side)
-      message = `⚠️ Error: ${error.message}`;
-    }
+      let message = "❌ An unexpected error occurred";
 
-    console.error("❌ Error fetching data from backend:", error);
-    alert(message);
+      if (error.response) {
+        message = `🚫 Server Error: ${error.response.status}\n${error.response.data?.error || error.response.statusText}`;
+      } else if (error.request) {
+        message = "📡 Network Error: No response from the server.";
+      } else {
+        message = `⚠️ Error: ${error.message}`;
+      }
+
+      console.error("❌ Error fetching data from backend:", error);
+      alert(message);
+    }
   }
 };
 

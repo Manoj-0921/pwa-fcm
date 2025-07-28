@@ -33,7 +33,7 @@ const enableNotifications = async () => {
     }
 
     try {
-      const response = await axios.post("https://de87e542bd7e.ngrok-free.app/login", {
+      const response = await axios.post("https://a36e13d19a39.ngrok-free.app/login", {
         username,
         password,
         token,
@@ -42,8 +42,13 @@ const enableNotifications = async () => {
 
       if (response.status === 200) {
         alert("✅ Login successful");
+        console.log("✅ Login successful:", response.data);
 setIsLoggedIn(true)
 sessionStorage.setItem("isLoggedIn", "true");
+sessionStorage.setItem("accessToken", response.data.accessToken);
+sessionStorage.setItem("refreshToken", response.data.refreshToken);
+
+
 sessionStorage.setItem("username", username)
        navigate("/home")
       }

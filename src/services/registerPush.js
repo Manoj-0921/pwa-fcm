@@ -1,4 +1,6 @@
 import { messaging, getToken, onMessage } from "../firebase-config";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function detectPlatform() {
   const ua = navigator.userAgent.toLowerCase();
