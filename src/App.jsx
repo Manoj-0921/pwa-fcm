@@ -6,12 +6,12 @@ import Home from "./Home/Home";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return sessionStorage.getItem("isLoggedIn") === "true";
+    return localStorage.getItem("isLoggedIn") === "true";
   });
 
   // Optional: keep localStorage in sync
   useEffect(() => {
-    sessionStorage.setItem("isLoggedIn", isLoggedIn);
+    localStorage.setItem("isLoggedIn", isLoggedIn);
   }, [isLoggedIn]);
 
   return (

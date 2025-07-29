@@ -20,10 +20,10 @@ const Home = ({setIsLoggedIn}) => {
   } = theme.useToken();
 
  const handleLogout = async () => {
-  const refreshToken=sessionStorage.getItem("refreshToken")
+  const refreshToken=localStorage.getItem("refreshToken")
     try {
       
-      await axios.post("https://70eda91ef7d9.ngrok-free.app/logout", {
+      await axios.post("https://ace37bcee54e.ngrok-free.app/logout", {
          token,
          platform,
          refreshToken
@@ -35,10 +35,10 @@ const Home = ({setIsLoggedIn}) => {
     }
     finally{
         setIsLoggedIn(false)
-        sessionStorage.removeItem("isLoggedIn");
-        sessionStorage.removeItem("accessToken");
-        sessionStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("username");
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("username");
 
 
  navigate("/");
@@ -48,14 +48,14 @@ const Home = ({setIsLoggedIn}) => {
   };
  
 const fetchFromBackend = async (dates) => {
-  const username = sessionStorage.getItem("username");
-  const accessToken = sessionStorage.getItem("accessToken");
-  const refreshToken = sessionStorage.getItem("refreshToken");
+  const username = localStorage.getItem("username");
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
   const { startDate, endDate } = dates;
 
   try {
     const response = await axios.post(
-      "https://70eda91ef7d9.ngrok-free.app/date",
+      "https://ace37bcee54e.ngrok-free.app/date",
       { startDate, endDate },
       {
         headers: {
@@ -74,12 +74,12 @@ const fetchFromBackend = async (dates) => {
       try {
         // Call refresh endpoint
         const refreshResponse = await axios.post(
-          "https://70eda91ef7d9.ngrok-free.app/refresh",
+          "https://ace37bcee54e.ngrok-free.app/refresh",
           { username, refreshToken }
         );
 
         if (refreshResponse.status === 200 && refreshResponse.data.accessToken) {
-          sessionStorage.setItem("accessToken", refreshResponse.data.accessToken);
+          localStorage.setItem("accessToken", refreshResponse.data.accessToken);
           console.log("🔁 Token refreshed. Retrying original request...");
           return fetchFromBackend(dates); // Retry with new token
         } else {
@@ -89,10 +89,10 @@ const fetchFromBackend = async (dates) => {
         console.error("🔒 Failed to refresh token:", refreshError);
         alert("Session expired. Please login again.");
        setIsLoggedIn(false)
-        sessionStorage.removeItem("isLoggedIn");
-        sessionStorage.removeItem("accessToken");
-        sessionStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("username");
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("username");
 
 
  navigate("/");
