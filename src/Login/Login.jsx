@@ -33,7 +33,7 @@ const enableNotifications = async () => {
     }
 
     try {
-      const response = await axios.post("https://bfa43d58417c.ngrok-free.app/login", {
+      const response = await axios.post("https://e1c2280a9723.ngrok-free.app/login", {
         username,
         password,
         token,

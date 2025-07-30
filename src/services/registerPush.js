@@ -63,7 +63,10 @@ console.log(token,"tokn")
       });
 
       console.log("iOS Web Push Subscription:", subscription,platform);
-      setToken({token:JSON.stringify(subscription),platform}); // Send to backend
+      setToken({
+        token: JSON.stringify(subscription.toJSON()),
+        platform,
+      }); // Send to backend
     } else {
       console.warn("Push notifications not supported or PWA not installed on iOS.");
     }

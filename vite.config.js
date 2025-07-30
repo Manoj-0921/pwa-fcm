@@ -7,7 +7,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+      },
       manifest: {
         name: 'FCM PWA App',
         short_name: 'FCM PWA',

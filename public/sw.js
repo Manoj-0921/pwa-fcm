@@ -1,7 +1,4 @@
-import { precacheAndRoute } from "workbox-precaching";
-
-// Injected by Workbox
-precacheAndRoute(self.__WB_MANIFEST);
+// sw.js (custom notifications only)
 
 // Handle push notifications
 self.addEventListener("push", (event) => {
