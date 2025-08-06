@@ -10,7 +10,7 @@ export const NotificationProvider = ({ children }) => {
   const [permission, setPermission] = useState(Notification.permission);
 
   useEffect(() => {
-    if (Notification.permission === "default"||"granted") {
+    if (Notification.permission === "granted") {
       register();
     } else {
       console.log("🔔 Notification permission not granted");

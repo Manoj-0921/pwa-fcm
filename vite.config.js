@@ -10,6 +10,12 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
       },
+      server: {
+    allowedHosts: [
+      "rndme-2406-7400-10a-791c-9707-afcd-7a2e-227d.a.free.pinggy.link" // your Pinggy hostname
+    ],
+    host: true // so it listens on all interfaces
+  },
       manifest: {
         name: 'FCM PWA App',
         short_name: 'FCM PWA',

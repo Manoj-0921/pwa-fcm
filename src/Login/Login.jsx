@@ -4,11 +4,12 @@ import axios from 'axios';
 import { useNotification } from '../NotificationContext';
 import { useNavigate } from "react-router-dom";
 
-export default function Login({setIsLoggedIn}) {
+export default function Login({setIsLoggedIn,setRole}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { token, platform } = useNotification(); // ✅ get from context
   const [permissionStatus, setPermissionStatus] = useState()
+
   console.log(token,platform)
   
 const navigate = useNavigate();
@@ -31,9 +32,9 @@ const enableNotifications = async () => {
       alert("🔔 Push token or platform not available yet.");
       return;
     }
-
+console.log(token,"to")
     try {
-      const response = await axios.post("https://e1c2280a9723.ngrok-free.app/login", {
+      const response = await axios.post( "https://c65e73a26f76.ngrok-free.app/api/login_mobile", {
         username,
         password,
         token,
@@ -44,13 +45,23 @@ const enableNotifications = async () => {
         alert("✅ Login successful");
         console.log("✅ Login successful:", response.data);
 setIsLoggedIn(true)
+setRole(response.data.role)
+
+ 
 localStorage.setItem("isLoggedIn", "true");
 localStorage.setItem("accessToken", response.data.accessToken);
 localStorage.setItem("refreshToken", response.data.refreshToken);
+localStorage.setItem("role", response.data.role);
 
 
 localStorage.setItem("username", username)
-       navigate("/home")
+     
+       if(response.data.role==="admin"){
+        navigate("/admin")
+       }
+       else{
+ navigate("/home")
+       }
       }
     } catch (err) {
       console.error(err);
@@ -105,12 +116,7 @@ localStorage.setItem("username", username)
             Sign In
           </button>
 
-          <button className="signup-link">
-            <span className="signup-text">
-              Don't have an account?{' '}
-              <span className="signup-text-bold">Sign up</span>
-            </span>
-          </button>
+          
         </div>
       </div>
     </div>

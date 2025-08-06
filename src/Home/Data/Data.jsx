@@ -10,9 +10,10 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
-import { Card, Button, DatePicker } from 'antd';
-import "./Data.css"
+import { Card, Button, DatePicker ,Select} from 'antd';
 
+import "./Data.css"
+const { Option } = Select;
 dayjs.extend(duration);
 
 
@@ -57,21 +58,28 @@ const paginatedChartData = chartData.slice(
 
   
   data.forEach(day => {
-   
-    day.records?.forEach(record => {
-      totalLogins += 1; 
-      const entry = dayjs(`2025-01-01T${record.entry}`);
-      const exit = dayjs(`2025-01-01T${record.exit}`);
+  day.records?.forEach(record => {
+    if (record.entry) {
+      totalLogins += 1; // Count login if entry exists
 
-     
-      const diff = exit.diff(entry, 'minute');
-      totalMinutes += diff; 
-    });
+      if (record.exit) {
+        const entry = dayjs(`2025-01-01T${record.entry}`);
+        const exit = dayjs(`2025-01-01T${record.exit}`);
+        const diff = exit.diff(entry, 'minute');
+
+        if (!isNaN(diff) && diff >= 0) {
+          totalMinutes += diff;
+        }
+      }
+    }
   });
+});
+
 
   
-  const totalHours = Math.floor(totalMinutes / 60);
-  const remainingMinutes = totalMinutes % 60;
+  const totalHours = Math.floor(totalMinutes / 60)||0;
+  console.log("hfsdfhsdfh",totalHours)
+  const remainingMinutes = totalMinutes % 60||0;
  
   const totalDurationStr = `${totalHours}h ${remainingMinutes}m`;
 
@@ -91,7 +99,9 @@ const paginatedChartData = chartData.slice(
           <h1 className="card-value green-text">{totalDurationStr}</h1>
         </div>
       </div>
+<div>
 
+</div>
 
       <div className="tab-container">
      
@@ -128,51 +138,70 @@ const paginatedChartData = chartData.slice(
                       {Array.isArray(day.records) && day.records.length > 0 && (
                         <span className="daily-total-duration">
                           Total: {(() => {
-                            let dayMinutes = 0;
-                            day.records.forEach(record => {
-                              const entry = dayjs(`2025-01-01T${record.entry}`);
-                              const exit = dayjs(`2025-01-01T${record.exit}`);
-                              dayMinutes += exit.diff(entry, 'minute');
-                            });
-                            const dayHours = Math.floor(dayMinutes / 60);
-                            const dayRemainingMinutes = dayMinutes % 60;
-                            return `${dayHours}h ${dayRemainingMinutes}m`;
-                          })()}
+  let dayMinutes = 0;
+  day.records.forEach(record => {
+    if (record.entry && record.exit) {
+      const entry = dayjs(`2025-01-01T${record.entry}`);
+      const exit = dayjs(`2025-01-01T${record.exit}`);
+      const diff = exit.diff(entry, 'minute');
+      if (!isNaN(diff) && diff >= 0) {
+        dayMinutes += diff;
+      }
+    }
+  });
+
+  const dayHours = Math.floor(dayMinutes / 60);
+  const dayRemainingMinutes = dayMinutes % 60;
+  return `${dayHours}h ${dayRemainingMinutes}m`;
+})()}
+
                         </span>
                       )}
                     </div>
                     {Array.isArray(day.records) && day.records.length > 0 ? (
                       
                       <ul className="individual-record-list"> 
-                        {day.records.map((record, index) => {
-                         
-                          const entryTime = dayjs(`2025-01-01T${record.entry}`);
-                          const exitTime = dayjs(`2025-01-01T${record.exit}`);
-                          const recordDiffMinutes = exitTime.diff(entryTime, 'minute');
-                          const recordHours = Math.floor(recordDiffMinutes / 60);
-                          const recordMinutes = recordDiffMinutes % 60;
-                          const recordDurationStr = `${recordHours}h ${recordMinutes}m`;
+                     {day.records.map((record, index) => {
+  const hasValidEntry = !!record.entry;
+  const hasValidExit = !!record.exit;
 
-                          return (
-                            <li key={index} className="individual-record-card"> 
-                             <div className="record-row">
-  <div className="record-cell">
-    <div className="detail-label">Entry</div>
-    <div className="detail-value">{record.entry}</div>
-  </div>
-  <div className="record-cell">
-    <div className="detail-label">Exit</div>
-    <div className="detail-value">{record.exit}</div>
-  </div>
-  <div className="record-cell">
-    <div className="detail-label">Duration</div>
-    <div className="detail-value">{recordDurationStr}</div>
-  </div>
-</div>
+  let recordDurationStr = "-";
 
-                            </li>
-                          );
-                        })}
+  if (hasValidEntry && hasValidExit) {
+    const entryTime = dayjs(`2025-01-01T${record.entry}`);
+    const exitTime = dayjs(`2025-01-01T${record.exit}`);
+    const recordDiffMinutes = exitTime.diff(entryTime, 'minute');
+
+    if (!isNaN(recordDiffMinutes) && recordDiffMinutes >= 0) {
+      const recordHours = Math.floor(recordDiffMinutes / 60);
+      const recordMinutes = recordDiffMinutes % 60;
+      recordDurationStr = `${recordHours}h ${recordMinutes}m`;
+    } else {
+      recordDurationStr = "-";
+    }
+  }
+
+  return (
+    <li key={index} className="individual-record-card">
+      <div className="record-row">
+        <div className="record-cell">
+          <div className="detail-label">Entry</div>
+          <div className="detail-value">{record.entry || "-"}</div>
+        </div>
+        <div className="record-cell">
+          <div className="detail-label">Exit</div>
+          <div className="detail-value">{record.exit || "-"}</div>
+        </div>
+        <div className="record-cell">
+          <div className="detail-label">Duration</div>
+          <div className="detail-value">{recordDurationStr}</div>
+        </div>
+      </div>
+    </li>
+  );
+})}
+
+                      
                       </ul>
                     ) : (
                      

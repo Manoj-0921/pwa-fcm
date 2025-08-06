@@ -8,6 +8,7 @@ import { CodeSandboxCircleFilled, ImportOutlined, LogoutOutlined } from '@ant-de
 import axios from 'axios';
 import { useNotification } from '../NotificationContext';
 import { useNavigate } from "react-router-dom"; 
+
 const { Header, Content, Footer } = Layout;
 
 const Home = ({setIsLoggedIn}) => {
@@ -20,14 +21,18 @@ const Home = ({setIsLoggedIn}) => {
   } = theme.useToken();
 
  const handleLogout = async () => {
+  
   const refreshToken=localStorage.getItem("refreshToken")
+  const username=localStorage.getItem("username")
     try {
       
-      await axios.post(" https://e1c2280a9723.ngrok-free.app/logout", {
-         token,
-         platform,
-         refreshToken
-      });
+  await axios.post("https://c65e73a26f76.ngrok-free.app/api/logout_mobile", {
+  refreshToken
+}, {
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
       console.log("🔕 Push token unregistered successfully");
     } catch (error) {
@@ -55,7 +60,7 @@ const fetchFromBackend = async (dates) => {
 
   try {
     const response = await axios.post(
-      " https://e1c2280a9723.ngrok-free.app/date",
+      "https://c65e73a26f76.ngrok-free.app/api/active_learning_mobile",
       { startDate, endDate },
       {
         headers: {
@@ -74,7 +79,7 @@ const fetchFromBackend = async (dates) => {
       try {
         // Call refresh endpoint
         const refreshResponse = await axios.post(
-          " https://e1c2280a9723.ngrok-free.app/refresh",
+          "https://c65e73a26f76.ngrok-free.app/api/check_reset_elgibility",
           { username, refreshToken }
         );
 
@@ -89,7 +94,7 @@ const fetchFromBackend = async (dates) => {
         console.error("🔒 Failed to refresh token:", refreshError);
         alert("Session expired. Please login again.");
        setIsLoggedIn(false)
-        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("isLoggedIn");s
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("username");
@@ -127,6 +132,7 @@ const fetchFromBackend = async (dates) => {
           <button className="logout-icon-btn" onClick={handleLogout}>
             <LogoutOutlined style={{ fontSize: '18px', color: 'white' }} />
           </button>
+        
         </Header>
 
         <Content style={{ marginTop: 64, overflow: 'initial' }}>

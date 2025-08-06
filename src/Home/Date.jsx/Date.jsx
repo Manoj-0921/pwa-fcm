@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, DatePicker } from 'antd';
 import dayjs from 'dayjs';
+import './Date.css'; // Import CSS here
 
-const DateSelector = ({ fetchFromBackend }) => {
+const Date = ({ fetchFromBackend }) => {
   const [startDate, setStartDate] = useState(dayjs());
   const [endDate, setEndDate] = useState(dayjs());
 
@@ -21,49 +22,41 @@ const DateSelector = ({ fetchFromBackend }) => {
   };
 
   useEffect(() => {
-    if ( startDate && endDate) {
+    if (startDate && endDate) {
       fetchFromBackend({
         startDate: startDate.format('YYYY-MM-DD HH:mm:ss'),
         endDate: endDate.format('YYYY-MM-DD HH:mm:ss'),
       });
     }
-  }, [startDate, endDate,]);
+  }, [startDate, endDate]);
 
   return (
-    <div style={containerStyle}>
-      {/* Start Date Inline */}
-    
+    <div className="date-selector-container1">
       {/* Shortcut Buttons */}
-      <Card
-        variant="borderless"
-        style={cardStyle}
-        bodyStyle={{ padding: '10px' }}
-      >
-        <div style={buttonRowStyle}>
-          <Button type="primary" size="large" onClick={() => handleShortcutClick('today')} style={buttonStyle}>Today</Button>
-          <Button type="primary" size="large" onClick={() => handleShortcutClick('week')} style={buttonStyle}>Week</Button>
-          <Button type="primary" size="large" onClick={() => handleShortcutClick('month')} style={buttonStyle}>Month</Button>
+      <Card variant="borderless" className="custom-card">
+        <div className="button-container">
+          <Button className="custom-button" type="primary" size="large" onClick={() => handleShortcutClick('today')}>
+            Today
+          </Button>
+          <Button className="custom-button" type="primary" size="large" onClick={() => handleShortcutClick('week')}>
+            Week
+          </Button>
+          <Button className="custom-button" type="primary" size="large" onClick={() => handleShortcutClick('month')}>
+            Month
+          </Button>
         </div>
       </Card>
 
-      {/* Start and End Date Side-by-Side */}
-      <Card variant="borderless" style={cardStyle} bodyStyle={{ padding: '10px' }}>
-        <div style={dateRowStyle}>
-          <div style={{ flex: 1 }}>
-            <label style={labelStyle}>Start Date</label>
-            <DatePicker
-              style={pickerStyle}
-              value={startDate}
-              onChange={(date) => setStartDate(date)}
-            />
+      {/* Date Pickers */}
+      <Card variant="borderless" className="custom-card">
+        <div className="date-row">
+          <div className="date-column">
+            <label className="date-label">Start Date</label>
+            <DatePicker className="range-picker" value={startDate} onChange={setStartDate} />
           </div>
-          <div style={{ flex: 1 }}>
-            <label style={labelStyle}>End Date</label>
-            <DatePicker
-              style={pickerStyle}
-              value={endDate}
-              onChange={(date) => setEndDate(date)}
-            />
+          <div className="date-column">
+            <label className="date-label">End Date</label>
+            <DatePicker className="range-picker" value={endDate} onChange={setEndDate} />
           </div>
         </div>
       </Card>
@@ -71,50 +64,4 @@ const DateSelector = ({ fetchFromBackend }) => {
   );
 };
 
-const containerStyle = {
-  width: '100%',
-  maxWidth: '24rem',
-  margin: '0 auto',
-  padding: '16px',
-};
-
-const cardStyle = {
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  borderRadius: '8px',
-  marginBottom: '10px',
-};
-
-const buttonRowStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  gap: '8px',
-};
-
-const buttonStyle = {
-  flex: 1,
-  borderRadius: '8px',
-  fontSize: '16px',
-  height: '44px',
-};
-
-const pickerStyle = {
-  width: '100%',
-  height: '44px',
-  fontSize: '16px',
-  borderRadius: '8px',
-};
-
-const labelStyle = {
-  display: 'block',
-  marginBottom: '6px',
-  fontWeight: 'bold',
-  fontSize: '14px',
-};
-
-const dateRowStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-  gap: '10px',
-};
-
-export default DateSelector;
+export default Date;

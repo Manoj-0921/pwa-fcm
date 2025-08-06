@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import { messaging, getToken, onMessage } from "../firebase-config";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,7 +26,7 @@ function urlBase64ToUint8Array(base64String) {
 
 export async function registerForPush(setToken) {
   const platform = detectPlatform();
- 
+  const username=localStorage.getItem("")
  alert(`
 Platform: ${platform}
 Is PWA Installed: ${isPwaInstalled()}
@@ -59,14 +60,11 @@ console.log(token,"tokn")
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array("BMU_YCY4w8CyrDxvP5aQt-1KsAJT8huKF6zfJQoBAGN0Xvcdzmxn5E-h-PKYeJAKEVPnFgO1zz3bZCOzBQQe7t8"),
+        applicationServerKey: urlBase64ToUint8Array("BH0D4dd-80wJw1zqYt9QMSeV7aI1hZXjmfAXKRAIfR_ejTcTn6SeQwEGbYjiT8YNgpCoLsbmjI9ASsbvlpnhOfc"),
       });
 
       console.log("iOS Web Push Subscription:", subscription,platform);
-      setToken({
-        token: JSON.stringify(subscription.toJSON()),
-        platform,
-      }); // Send to backend
+      setToken({ token: subscription, platform });  // Send to backend
     } else {
       console.warn("Push notifications not supported or PWA not installed on iOS.");
     }

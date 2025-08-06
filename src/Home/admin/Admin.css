@@ -1,0 +1,111 @@
+/* Base Layout */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5;
+}
+
+.app-header {
+  background: #001529;
+  color: white;
+  display: flex;
+  align-items: center;
+   justify-content: space-between;
+  padding: 0 16px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.header-left span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.app-header h1 {
+  color: white;
+  font-size: 18px;
+  margin: 0;
+}
+.logout-icon-btn {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.logout-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Content Area */
+.app-content {
+  flex: 1;
+  padding: 12px;
+  background-color: #f0f2f5;
+  overflow-y: auto;
+}
+
+.selectors {
+  margin-bottom: 12px;
+}
+
+.selectors .ant-select {
+  margin-bottom: 10px;
+}
+
+/* Table responsiveness */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive Typography and Layout */
+@media (min-width: 480px) {
+  .app-header h1 {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-layout {
+    max-width: 750px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+  }
+
+  .app-header h1 {
+    font-size: 22px;
+  }
+
+  .app-content {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-layout {
+    max-width: 900px;
+  }
+
+  .app-header h1 {
+    font-size: 24px;
+  }
+}

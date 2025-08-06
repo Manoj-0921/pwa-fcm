@@ -3,13 +3,18 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { NotificationProvider } from "./NotificationContext";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
+import Admin from "./Home/admin/Admin";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+ const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
 
-  // Optional: keep localStorage in sync
+  const [role, setRole] = useState(() => {
+    return localStorage.getItem("role") || "";
+  });
+
+  // Keep localStorage in sync
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn);
   }, [isLoggedIn]);
@@ -22,23 +27,38 @@ function App() {
             path="/"
             element={
               isLoggedIn ? (
-                <Navigate to="/home" replace />
-              ) : (
-                <Login setIsLoggedIn={setIsLoggedIn} />
+                role === "admin" ? (
+                  <Navigate to="/admin" replace />
+                ) : (
+                  <Navigate to="/home" replace />
+                )
+              )  : (
+                <Login setIsLoggedIn={setIsLoggedIn} setRole={setRole} />
               )
             }
           />
-          <Route
+       <Route
             path="/home"
             element={
-              isLoggedIn ? (
+              isLoggedIn && role === "user" ? (
                 <Home setIsLoggedIn={setIsLoggedIn} />
               ) : (
                 <Navigate to="/" replace />
               )
             }
           />
-          {/* <Route path="/test-home" element={<Home />} /> */}
+
+          {/* Admin Route */}
+          <Route
+            path="/admin"
+            element={
+              isLoggedIn && role === "admin" ? (
+                <Admin  setIsLoggedIn={setIsLoggedIn}/>
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
         </Routes>
         
       </Router>
