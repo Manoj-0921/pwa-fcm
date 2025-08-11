@@ -60,7 +60,7 @@ console.log(token,"tokn")
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array("BH0D4dd-80wJw1zqYt9QMSeV7aI1hZXjmfAXKRAIfR_ejTcTn6SeQwEGbYjiT8YNgpCoLsbmjI9ASsbvlpnhOfc"),
+        applicationServerKey: urlBase64ToUint8Array("BMU_YCY4w8CyrDxvP5aQt-1KsAJT8huKF6zfJQoBAGN0Xvcdzmxn5E-h-PKYeJAKEVPnFgO1zz3bZCOzBQQe7t8"),
       });
 
       console.log("iOS Web Push Subscription:", subscription,platform);

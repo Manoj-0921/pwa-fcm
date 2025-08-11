@@ -34,10 +34,10 @@ const enableNotifications = async () => {
     }
 console.log(token,"to")
     try {
-      const response = await axios.post( "https://c65e73a26f76.ngrok-free.app/api/login_mobile", {
+      const response = await axios.post( "https://backend.schmidvision.com/api/login_mobile", {
         username,
         password,
-        token,
+        fcmToken: token,
         platform,
       });
 

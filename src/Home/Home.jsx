@@ -26,7 +26,7 @@ const Home = ({setIsLoggedIn}) => {
   const username=localStorage.getItem("username")
     try {
       
-  await axios.post("https://c65e73a26f76.ngrok-free.app/api/logout_mobile", {
+  await axios.post("https://backend.schmidvision.com/api/logout_mobile", {
   refreshToken
 }, {
   headers: {
@@ -60,7 +60,7 @@ const fetchFromBackend = async (dates) => {
 
   try {
     const response = await axios.post(
-      "https://c65e73a26f76.ngrok-free.app/api/active_learning_mobile",
+      "https://backend.schmidvision.com/api/active_learning_mobile",
       { startDate, endDate },
       {
         headers: {
@@ -70,8 +70,8 @@ const fetchFromBackend = async (dates) => {
     );
 
     if (response.status === 200) {
-      console.log("✅ Response from backend:", response.data.attendance);
-      setData(response.data.attendance || []);
+      console.log("✅ Response from backend:", response.data.dailyRecords);
+      setData(response.data.dailyRecords || []);
     }
   } catch (error) {
     if (error.response && error.response.status === 403 && refreshToken) {
@@ -79,7 +79,7 @@ const fetchFromBackend = async (dates) => {
       try {
         // Call refresh endpoint
         const refreshResponse = await axios.post(
-          "https://c65e73a26f76.ngrok-free.app/api/check_reset_elgibility",
+          "https://backend.schmidvision.com/api/check_reset_elgibility",
           { username, refreshToken }
         );
 
