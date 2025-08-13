@@ -63,7 +63,7 @@ const Admin = ({ setIsLoggedIn }) => {
   };
 
   const fetchMembers = async (department, team, start, end) => {
-    console.log("hii")
+    console.log("hii");
     try {
       const response = await axios.post(
         "https://backend.schmidvision.com/api/get_department_team_members",
@@ -81,7 +81,7 @@ const Admin = ({ setIsLoggedIn }) => {
       );
 
       if (response.status === 200) {
-        console.log(response.data.data,"hii")
+        console.log(response.data.data, "hii");
         setMembers(
           response.data.data.map((member, index) => ({
             key: index,
@@ -96,16 +96,16 @@ const Admin = ({ setIsLoggedIn }) => {
       console.error("❌ Error fetching members:", err);
     }
   };
-  console.log(members,"df")
+  console.log(members, "df");
 
   const handleLogout = async () => {
     const refreshToken = localStorage.getItem("refreshToken");
+    const username = localStorage.getItem("username");
     try {
-      await axios.post(
-        "https://backend.schmidvision.com/api/logout_mobile",
-        { refreshToken },
-        { headers: { "Content-Type": "application/json" } }
-      );
+      await axios.post("https://backend.schmidvision.com/api/logout_mobile", {
+        refreshToken,
+        username,
+      });
     } catch (error) {
       console.error("❌ Logout failed:", error);
     } finally {
@@ -116,18 +116,18 @@ const Admin = ({ setIsLoggedIn }) => {
   };
 
   const handleToggleNotification = async (systemId, enabled) => {
-    console.log (systemId)
-   
+    console.log(systemId);
+
     try {
       await axios.post(
         "https://backend.schmidvision.com/api/update_notification_status",
-        { system_id:systemId, enabled },
+        { system_id: systemId, enabled },
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
-      ); 
+      );
     } catch (err) {
       console.error(`❌ Error updating notification for ${username}:`, err);
     }
@@ -141,7 +141,9 @@ const Admin = ({ setIsLoggedIn }) => {
       render: (_, record) => (
         <Switch
           defaultChecked={record.enabled}
-          onChange={(checked) => handleToggleNotification(record.systemId, checked)}
+          onChange={(checked) =>
+            handleToggleNotification(record.systemId, checked)
+          }
         />
       ),
     },
