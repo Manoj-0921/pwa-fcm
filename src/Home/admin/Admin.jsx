@@ -86,7 +86,7 @@ const Admin = ({ setIsLoggedIn }) => {
           response.data.data.map((member, index) => ({
             key: index,
             name: member.name,
-            enabled: member.notificationEnabled,
+            enabled: member.admin_monitor,
             averageStay: member.averageDwellTime,
             systemId: member.system_id,
           }))

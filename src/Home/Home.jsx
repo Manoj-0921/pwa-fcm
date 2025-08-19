@@ -52,6 +52,7 @@ const Home = ({ setIsLoggedIn }) => {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     const { startDate, endDate } = dates;
+    console.log("Fetching data from backend with dates:", startDate, endDate);
 
     try {
       const response = await axios.post(
