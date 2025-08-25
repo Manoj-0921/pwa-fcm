@@ -25,7 +25,7 @@ const Admin = ({ setIsLoggedIn }) => {
   const fetchHierarchyData = async () => {
     try {
       const response = await axios.get(
-        "https://backend.schmidvision.com/api/get_departments"
+        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/get_departments"
       );
       if (response.status === 200) {
         setHierarchyData(response.data);
@@ -66,7 +66,7 @@ const Admin = ({ setIsLoggedIn }) => {
     console.log("hii");
     try {
       const response = await axios.post(
-        "https://backend.schmidvision.com/api/get_department_team_members",
+        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/get_department_team_members",
         {
           department,
           team,
@@ -102,10 +102,13 @@ const Admin = ({ setIsLoggedIn }) => {
     const refreshToken = localStorage.getItem("refreshToken");
     const username = localStorage.getItem("username");
     try {
-      await axios.post("https://backend.schmidvision.com/api/logout_mobile", {
-        refreshToken,
-        username,
-      });
+      await axios.post(
+        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/logout_mobile",
+        {
+          refreshToken,
+          username,
+        }
+      );
     } catch (error) {
       console.error("❌ Logout failed:", error);
     } finally {
@@ -120,7 +123,7 @@ const Admin = ({ setIsLoggedIn }) => {
 
     try {
       await axios.post(
-        "https://backend.schmidvision.com/api/update_notification_status",
+        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/update_notification_status",
         { system_id: systemId, enabled },
         {
           headers: {
