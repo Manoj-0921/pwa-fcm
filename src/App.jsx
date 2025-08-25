@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { NotificationProvider } from "./NotificationContext";
+import { ToastContainer } from "react-toastify";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
 import Admin from "./Home/admin/Admin";
 
 function App() {
- const [isLoggedIn, setIsLoggedIn] = useState(() => {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
 
@@ -32,12 +38,12 @@ function App() {
                 ) : (
                   <Navigate to="/home" replace />
                 )
-              )  : (
+              ) : (
                 <Login setIsLoggedIn={setIsLoggedIn} setRole={setRole} />
               )
             }
           />
-       <Route
+          <Route
             path="/home"
             element={
               isLoggedIn && role === "user" ? (
@@ -53,15 +59,15 @@ function App() {
             path="/admin"
             element={
               isLoggedIn && role === "admin" ? (
-                <Admin  setIsLoggedIn={setIsLoggedIn}/>
+                <Admin setIsLoggedIn={setIsLoggedIn} />
               ) : (
                 <Navigate to="/" replace />
               )
             }
           />
         </Routes>
-        
       </Router>
+      <ToastContainer />
     </NotificationProvider>
   );
 }
