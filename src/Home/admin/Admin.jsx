@@ -25,15 +25,17 @@ const Admin = ({ setIsLoggedIn }) => {
   const fetchHierarchyData = async () => {
     try {
       const response = await axios.get(
-        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/get_departments"
+        "https://99abf0b32a09.ngrok-free.app/api/departments"
       );
       if (response.status === 200) {
+        console.log(response.data, "dkkf");
         setHierarchyData(response.data);
       }
     } catch (err) {
       console.error("❌ Error fetching hierarchy data:", err);
     }
   };
+  console.log(hierarchyData, "dkkppf");
 
   const handleDeptChange = (value) => {
     setSelectedDept(value);
@@ -66,7 +68,7 @@ const Admin = ({ setIsLoggedIn }) => {
     console.log("hii");
     try {
       const response = await axios.post(
-        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/get_department_team_members",
+        "/api/get_department_team_members",
         {
           department,
           team,
@@ -103,7 +105,7 @@ const Admin = ({ setIsLoggedIn }) => {
     const username = localStorage.getItem("username");
     try {
       await axios.post(
-        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/logout_mobile",
+        "https://99abf0b32a09.ngrok-free.app/api/logout_mobile",
         {
           refreshToken,
           username,
@@ -123,7 +125,7 @@ const Admin = ({ setIsLoggedIn }) => {
 
     try {
       await axios.post(
-        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/update_notification_status",
+        "https://99abf0b32a09.ngrok-free.app/api/update_notification_status",
         { system_id: systemId, enabled },
         {
           headers: {
@@ -177,7 +179,7 @@ const Admin = ({ setIsLoggedIn }) => {
               onChange={handleDeptChange}
               value={selectedDept}
             >
-              {Object.keys(hierarchyData).map((dept) => (
+              {Object.keys(hierarchyData)?.map((dept) => (
                 <Option key={dept} value={dept}>
                   {dept}
                 </Option>
@@ -192,7 +194,8 @@ const Admin = ({ setIsLoggedIn }) => {
               disabled={!selectedDept}
             >
               {selectedDept &&
-                hierarchyData[selectedDept]?.map((team) => (
+                Array.isArray(hierarchyData[selectedDept]) &&
+                hierarchyData[selectedDept].map((team) => (
                   <Option key={team} value={team}>
                     {team}
                   </Option>

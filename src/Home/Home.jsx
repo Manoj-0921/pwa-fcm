@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./Home.css";
-import Date from "./Date.jsx/Date";
+import Date from "./Date/Date";
 import Data from "./Data/Data";
 import { Layout, theme } from "antd";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons"; // import the icon
 import axios from "axios";
 import { useNotification } from "../NotificationContext";
+
 import { useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
@@ -29,7 +30,7 @@ const Home = ({ setIsLoggedIn }) => {
     const username = localStorage.getItem("username");
     try {
       await axios.post(
-        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/logout_mobile",
+        "https://99abf0b32a09.ngrok-free.app/api/logout_mobile",
         {
           refreshToken,
           username,
@@ -59,7 +60,7 @@ const Home = ({ setIsLoggedIn }) => {
 
     try {
       const response = await axios.post(
-        "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/active_learning_mobile",
+        "https://99abf0b32a09.ngrok-free.app/api/active_learning_mobile",
         { startDate, endDate },
         {
           headers: {
@@ -78,7 +79,7 @@ const Home = ({ setIsLoggedIn }) => {
         try {
           // Call refresh endpoint
           const refreshResponse = await axios.post(
-            "https://8a15cfbdb2271d4cefba79777d711b21.serveo.net/api/check_reset_elgibility",
+            "https://99abf0b32a09.ngrok-free.app/api/check_reset_elgibility",
             { username, refreshToken }
           );
 

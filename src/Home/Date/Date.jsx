@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, DatePicker } from "antd";
+import { Card, DatePicker } from "antd";
 import dayjs from "dayjs";
-import "./Date.css"; // Import CSS here
+import "./Date.css";
 
 const Date = ({ fetchFromBackend }) => {
   const [startDate, setStartDate] = useState(dayjs());
   const [endDate, setEndDate] = useState(dayjs());
+  const [activeTab, setActiveTab] = useState("today");
 
   const handleShortcutClick = (type) => {
+    setActiveTab(type);
     const today = dayjs();
     if (type === "today") {
-      setStartDate(today.startOf("day")); // 00:00 today
-      setEndDate(today.endOf("day")); // 23:59:59 today
+      setStartDate(today.startOf("day"));
+      setEndDate(today.endOf("day"));
     } else if (type === "week") {
       setStartDate(today.subtract(6, "day").startOf("day"));
       setEndDate(today.endOf("day"));
@@ -32,38 +34,32 @@ const Date = ({ fetchFromBackend }) => {
 
   return (
     <div className="date-selector-container1">
-      {/* Shortcut Buttons */}
-      <Card variant="borderless" className="custom-card">
-        <div className="button-container">
-          <Button
-            className="custom-button"
-            type="primary"
-            size="large"
+      {/* Shortcut Tabs Card */}
+      <div className="custom-card shortcut-tabs-card">
+        <div className="shortcut-tabs">
+          <button
+            className={`shortcut-tab${activeTab === "today" ? " active" : ""}`}
             onClick={() => handleShortcutClick("today")}
           >
             Today
-          </Button>
-          <Button
-            className="custom-button"
-            type="primary"
-            size="large"
+          </button>
+          <button
+            className={`shortcut-tab${activeTab === "week" ? " active" : ""}`}
             onClick={() => handleShortcutClick("week")}
           >
             Week
-          </Button>
-          <Button
-            className="custom-button"
-            type="primary"
-            size="large"
+          </button>
+          <button
+            className={`shortcut-tab${activeTab === "month" ? " active" : ""}`}
             onClick={() => handleShortcutClick("month")}
           >
             Month
-          </Button>
+          </button>
         </div>
-      </Card>
+      </div>
 
-      {/* Date Pickers */}
-      <Card variant="borderless" className="custom-card">
+      {/* Date Pickers Card */}
+      <div className="custom-card date-pickers-card">
         <div className="date-row">
           <div className="date-column">
             <label className="date-label">Start Date</label>
@@ -82,7 +78,7 @@ const Date = ({ fetchFromBackend }) => {
             />
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

@@ -54,7 +54,6 @@ function App() {
             }
           />
 
-          {/* Admin Route */}
           <Route
             path="/admin"
             element={

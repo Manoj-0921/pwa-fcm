@@ -1,4 +1,3 @@
-// context/NotificationContext.js
 import { createContext, useContext, useState, useEffect } from "react";
 import { registerForPush } from "./services/registerPush.js";
 
@@ -25,9 +24,7 @@ export const NotificationProvider = ({ children }) => {
   };
 
   return (
-    <NotificationContext.Provider
-      value={{ token, platform, permission }}
-    >
+    <NotificationContext.Provider value={{ token, platform, permission }}>
       {children}
     </NotificationContext.Provider>
   );

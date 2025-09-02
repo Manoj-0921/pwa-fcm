@@ -3,7 +3,7 @@
   max-width: 480px;
   margin: 0 auto;
   padding: 16px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   box-sizing: border-box;
 }
 
@@ -47,30 +47,37 @@
 .tab-buttons-wrapper {
   display: flex;
   justify-content: center;
+  gap: 8px;
   margin-bottom: 16px;
-  border-bottom: 1px solid #ddd;
+  background: #f7f7fa;
+  border-radius: 12px;
+  padding-top: 10px;
+  border-bottom: none;
 }
 
 .tab-button {
   flex: 1;
   padding: 10px 0;
-  background-color: transparent;
+  background: #dadadd;
   border: none;
+  border-radius: 10px;
   font-size: 16px;
   color: #555;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: 0.2s ease;
-}
-
-.tab-button:hover {
-  color: #000;
-}
-
-.active-tab {
-  color: #007bff;
-  border-bottom: 2px solid #007bff;
   font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+  margin: 0 2px;
+}
+
+.tab-button.active-tab {
+  background: #4f6ef7;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(79, 110, 247, 0.08);
+}
+
+.tab-button:not(.active-tab):hover {
+  background: #e4e8f7;
+  color: #222;
 }
 
 /* Tab content area */
@@ -122,11 +129,12 @@
 }
 
 .individual-record-card {
-  background-color: #e7e7e7;
-  border-radius: 8px;
-  padding: 10px;
-  margin-top: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
+  background-color: #f7f7fa;
+  border-radius: 18px;
+  padding: 8px; /* was 14px */
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(79, 110, 247, 0.08);
+  transition: box-shadow 0.2s;
 }
 
 .record-detail {
@@ -138,12 +146,18 @@
 }
 
 .detail-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 2px;
   font-weight: 500;
-  color: #555;
+  letter-spacing: 0.5px;
 }
 
 .detail-value {
-  color: #111;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 1px;
 }
 
 /* No data styling */
@@ -169,61 +183,57 @@
   .record-detail {
     font-size: 13px;
   }
+
+  .individual-record-card {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .record-row {
+    gap: 6px;
+  }
+
+  .record-cell {
+    padding: 4px;
+    border-radius: 10px;
+  }
 }
+
 .record-row {
   display: flex;
   justify-content: space-between;
   text-align: center;
-  margin-top: 4px;
+  gap: 10px;
 }
 
 .record-cell {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 4px;
-  border-right: 1px solid #eee;
+  padding: 4px 6px; /* was 8px */
+  border: 1px solid #f0f0f0;
+  margin: 2px;
+  border-radius: 14px; /* More rounded */
+  min-width: 0;
 }
 
-.record-cell:last-child {
-  border-right: none;
-}
-
-.detail-label {
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 2px;
-}
-
-.detail-value {
-  font-size: 15px;
-  font-weight: 500;
-  color: #111;
-}
-@media (max-width: 400px) {
-  .record-cell {
-    padding: 2px;
-  }
-
-  .detail-label {
-    font-size: 12px;
-  }
-
-  .detail-value {
-    font-size: 14px;
-  }
-}
-.entry-cell {
-  background-color: #e6f0ff;
-  border-radius: 4px;
-}
-
-.exit-cell {
-  background-color: #ffe6e6;
-  border-radius: 4px;
-}
-
+.entry-cell,
+.exit-cell,
 .duration-cell {
-  background-color: #e6ffee;
-  border-radius: 4px;
+  background-color: #e6e8fa; /* Soft blue */
+  border-radius: 14px;
+}
+
+/* Optional: Add a subtle border for separation */
+.record-cell {
+  border: 1px solid #f0f0f0;
+  margin: 2px;
+}
+.tab-refresh-btn {
+  padding: 0 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.tab-refresh-btn:hover {
+  background: #e4e8f7;
 }

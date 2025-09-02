@@ -11,12 +11,13 @@ import {
   CartesianGrid,
 } from "recharts";
 import { Card, Button, DatePicker, Select } from "antd";
+import { ReloadOutlined } from "@ant-design/icons";
 
 import "./Data.css";
 const { Option } = Select;
 dayjs.extend(duration);
 
-const Data = ({ data }) => {
+const Data = ({ data, onRefresh }) => {
   const [activeTab, setActiveTab] = useState("events");
   const [pageIndex, setPageIndex] = useState(0);
   const itemsPerPage = 5;
@@ -95,7 +96,6 @@ const Data = ({ data }) => {
           <h1 className="card-value green-text">{totalDurationStr}</h1>
         </div>
       </div>
-      <div></div>
 
       <div className="tab-container">
         <div className="tab-buttons-wrapper">
@@ -115,11 +115,28 @@ const Data = ({ data }) => {
           >
             Insights
           </button>
+          {/* Refresh icon */}
+          <button
+            className="tab-refresh-btn"
+            onClick={onRefresh}
+            style={{
+              background: "transparent",
+              border: "none",
+              marginLeft: "8px",
+              cursor: "pointer",
+              fontSize: "22px",
+              display: "flex",
+              alignItems: "center",
+              color: "#4f6ef7",
+            }}
+            title="Refresh"
+          >
+            <ReloadOutlined />
+          </button>
         </div>
 
         {activeTab === "events" && (
           <div className="tab-content">
-            <h2 className="section-title">Attendance Records</h2>
             {data.length === 0 ? (
               <p className="no-records-message">No records to display.</p>
             ) : (
@@ -194,24 +211,21 @@ const Data = ({ data }) => {
                             }
 
                             return (
-                              <li
-                                key={index}
-                                className="individual-record-card"
-                              >
+                              <li key={index} className="individual-record-card">
                                 <div className="record-row">
-                                  <div className="record-cell">
+                                  <div className="record-cell entry-cell">
                                     <div className="detail-label">Entry</div>
                                     <div className="detail-value">
                                       {record.entry || "-"}
                                     </div>
                                   </div>
-                                  <div className="record-cell">
+                                  <div className="record-cell exit-cell">
                                     <div className="detail-label">Exit</div>
                                     <div className="detail-value">
                                       {record.exit || "-"}
                                     </div>
                                   </div>
-                                  <div className="record-cell">
+                                  <div className="record-cell duration-cell">
                                     <div className="detail-label">Duration</div>
                                     <div className="detail-value">
                                       {recordDurationStr}
@@ -236,7 +250,6 @@ const Data = ({ data }) => {
 
         {activeTab === "insights" && (
           <div className="tab-content">
-            <h2 className="section-title">Daily Duration</h2>
             {/* <div className="tab-content"> */}
 
             {chartData.length === 0 ? (
