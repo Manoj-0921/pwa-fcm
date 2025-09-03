@@ -3,7 +3,7 @@ import { Card, DatePicker } from "antd";
 import dayjs from "dayjs";
 import "./Date.css";
 
-const Date = ({ fetchFromBackend }) => {
+const Date = ({ fetchFromBackend, setDateRange }) => {
   const [startDate, setStartDate] = useState(dayjs());
   const [endDate, setEndDate] = useState(dayjs());
   const [activeTab, setActiveTab] = useState("today");
@@ -25,10 +25,12 @@ const Date = ({ fetchFromBackend }) => {
 
   useEffect(() => {
     if (startDate && endDate) {
-      fetchFromBackend({
+      const range = {
         startDate: startDate.format("YYYY-MM-DD HH:mm:ss"),
         endDate: endDate.format("YYYY-MM-DD HH:mm:ss"),
-      });
+      };
+      setDateRange(range); // Update parent's date range
+      fetchFromBackend(range);
     }
   }, [startDate, endDate]);
 

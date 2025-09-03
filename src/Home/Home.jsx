@@ -1,25 +1,21 @@
-import React from "react";
-import { useState } from "react";
-import "./Home.css";
+import React, { useState } from "react";
 import Date from "./Date/Date";
 import Data from "./Data/Data";
 import { Layout, theme } from "antd";
-import {
-  CodeSandboxCircleFilled,
-  ImportOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons"; // import the icon
+import { LogoutOutlined } from "@ant-design/icons"; // import the icon
 import axios from "axios";
 import { useNotification } from "../NotificationContext";
 
 import { useNavigate } from "react-router-dom";
+import "./Home.css";
 
 const { Header, Content, Footer } = Layout;
 
-const Home = ({ setIsLoggedIn }) => {
+const Home = ({ setIsLoggedIn, onRefresh }) => {
   const navigate = useNavigate();
   const { token, platform } = useNotification([]);
   const [data, setData] = useState([]);
+  const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
   console.log(data, "hii");
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -148,7 +144,10 @@ const Home = ({ setIsLoggedIn }) => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Date fetchFromBackend={fetchFromBackend} />
+            <Date
+              fetchFromBackend={fetchFromBackend}
+              setDateRange={setDateRange}
+            />
           </div>
           <div
             style={{
@@ -158,7 +157,7 @@ const Home = ({ setIsLoggedIn }) => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Data data={data} />
+            <Data data={data} onRefresh={() => fetchFromBackend(dateRange)} />
           </div>
         </Content>
 

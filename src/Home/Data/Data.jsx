@@ -211,7 +211,10 @@ const Data = ({ data, onRefresh }) => {
                             }
 
                             return (
-                              <li key={index} className="individual-record-card">
+                              <li
+                                key={index}
+                                className="individual-record-card"
+                              >
                                 <div className="record-row">
                                   <div className="record-cell entry-cell">
                                     <div className="detail-label">Entry</div>
