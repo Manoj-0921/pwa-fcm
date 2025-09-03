@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import "./App.css";
 import { NotificationProvider } from "./NotificationContext";
 import { ToastContainer } from "react-toastify";
 import Login from "./Login/Login";
@@ -66,7 +67,18 @@ function App() {
           />
         </Routes>
       </Router>
-      <ToastContainer />
+      <ToastContainer
+        position="top-center" // keep base position
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        draggable
+        pauseOnHover
+        toastClassName="custom-toast"
+        bodyClassName="custom-toast-body"
+      />
     </NotificationProvider>
   );
 }

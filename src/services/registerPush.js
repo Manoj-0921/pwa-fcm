@@ -50,8 +50,7 @@ Is PWA Installed: ${isPwaInstalled()}
       onMessage(messaging, (payload) => {
         console.log(" Foreground FCM message:", payload);
         toast.info(
-          `${payload.notification.title}\n${payload.notification.body}`,
-          { position: "top-center", autoClose: 5000 }
+          `${payload.notification.title}\n${payload.notification.body}`
         );
       });
     } else if (platform === "ios") {

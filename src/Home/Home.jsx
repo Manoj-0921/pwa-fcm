@@ -29,13 +29,10 @@ const Home = ({ setIsLoggedIn }) => {
     const refreshToken = localStorage.getItem("refreshToken");
     const username = localStorage.getItem("username");
     try {
-      await axios.post(
-        "https://99abf0b32a09.ngrok-free.app/api/logout_mobile",
-        {
-          refreshToken,
-          username,
-        }
-      );
+      await axios.post("https://backend.schmidvision.com/api/logout_mobile", {
+        refreshToken,
+        username,
+      });
 
       console.log("🔕 Push token unregistered successfully");
     } catch (error) {
@@ -60,7 +57,7 @@ const Home = ({ setIsLoggedIn }) => {
 
     try {
       const response = await axios.post(
-        "https://99abf0b32a09.ngrok-free.app/api/active_learning_mobile",
+        "https://backend.schmidvision.com/api/active_learning_mobile",
         { startDate, endDate },
         {
           headers: {
@@ -79,7 +76,7 @@ const Home = ({ setIsLoggedIn }) => {
         try {
           // Call refresh endpoint
           const refreshResponse = await axios.post(
-            "https://99abf0b32a09.ngrok-free.app/api/check_reset_elgibility",
+            "https://backend.schmidvision.com/api/check_reset_elgibility",
             { username, refreshToken }
           );
 
